@@ -108,6 +108,7 @@ public class Preprocessor {
                 }
                 labels="";
                 finStory="";
+                System.out.println("Finished the section "+title);
             }
             lineScanner.close();
         }
