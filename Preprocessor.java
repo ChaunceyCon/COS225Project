@@ -72,7 +72,7 @@ public class Preprocessor {
                 Scanner storyScanner = new Scanner(currLine);
                 storyScanner.useDelimiter("/");
                 title=storyScanner.next();
-                storyScanner.useDelimiter("./\"[\"\"");
+                storyScanner.useDelimiter("\\.\\/\"\\[\"\"");
                 iniStory=storyScanner.next();
                 storyScanner.useDelimiter("\\W+");
                 while(storyScanner.hasNext())
@@ -106,14 +106,14 @@ public class Preprocessor {
                     System.out.println("There was an error finding the file to write to!");
                     e.printStackTrace();
                 }
-
-
+                labels="";
+                finStory="";
             }
             lineScanner.close();
         }
         catch(FileNotFoundException e)
         {
-            System.out.println("Error finding the file to write!");
+            System.out.println("Error finding the file to read!");
             e.printStackTrace();
         }
     }
