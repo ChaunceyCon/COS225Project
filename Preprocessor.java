@@ -3,7 +3,7 @@ import java.io.*;
 
 public class Preprocessor {
     
-    public void keepLongest(String readPath,String writePath)
+    public static void keepLongest(String readPath,String writePath)
     {
         String curTitle="";
         String newTitle="";
@@ -17,17 +17,17 @@ public class Preprocessor {
             {
                 curLine=lineScanner.nextLine();
                 Scanner titleScanner = new Scanner(curLine);
-                titleScanner.useDelimiter("/");
+                titleScanner.useDelimiter("/+");
                 newTitle=titleScanner.next();
                 //if our current line has a different title than the previous line, add our current longest line to the write file and then look for a new one with the new title
-                if(curTitle!=newTitle)
+                if(!curTitle.equals(newTitle))
                 {
                     //this if statement prevents the first empty longLine
                     if(!curTitle.equals(""))
                     {
                         try(FileWriter writer = new FileWriter(writePath,true))
                         {
-                            writer.write(longLine);
+                            writer.write(longLine+"\n");
                         }
                         catch(IOException e)
                         {
@@ -37,6 +37,7 @@ public class Preprocessor {
                     }
                     longLine="";
                     curTitle=newTitle;
+                    System.out.println("Starting the section "+curTitle);
                 }
                 if(curLine.length()>longLine.length())
                 {longLine=curLine;}
@@ -51,9 +52,14 @@ public class Preprocessor {
 
     }
 
-    public void decapitalize(String readFile,String writeFile)
+    public static void decapitalize(String readFile,String writeFile)
     {
 
+    }
+
+    public static void main(String[] args)
+    {
+        Preprocessor.keepLongest("raw.txt","longest.txt");
     }
 
 }
