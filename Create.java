@@ -9,12 +9,12 @@ import com.mongodb.client.MongoDatabase;
 public class Create {
 
     public static void main(String[] args) {
-        String connectionString = "mongodb+srv://<username>:<password>@<cluster-name>.vajhl.mongodb.net/?retryWrites=true&w=majority&appName=<cluster-name>";
+        String connectionString = // Connection string;
 
         try (MongoClient mongoclient = MongoClients.create(connectionString)) {
 
             // Connect to the desired database
-            MongoDatabase database = mongoclient.getDatabase("story_database");  // Change to your DB name
+            MongoDatabase database = mongoclient.getDatabase("story_database");  
 
             // Connect to the stories collection (this collection will store the short stories)
             MongoCollection<Document> storiesCollection = database.getCollection("stories");
