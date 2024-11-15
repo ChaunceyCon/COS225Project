@@ -1,3 +1,5 @@
+package COS225Project.src.main.java.com.storyreview;
+
 import java.util.*;
 import java.io.*;
 
@@ -118,12 +120,4 @@ public class Preprocessor {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args)
-    {
-        //done: Preprocessor.keepLongest("raw.txt","longest.txt");
-        Preprocessor.decapitalize("longest.txt", "final.txt");
-
-    }
-
 }
