@@ -6,55 +6,49 @@ import java.io.*;
 public class Preprocessor {
     
     //removes all but the longest version of each story from the raw data
-    public static void keepLongest(String readPath,String writePath)
-    {
-        String curTitle="";
-        String newTitle="";
-        String longLine="";
-        String curLine="";
-        try
-        {
-            File readFile = new File(readPath);
-            Scanner lineScanner = new Scanner(readFile);
-            while(lineScanner.hasNextLine())
-            {
-                curLine=lineScanner.nextLine();
+    public static void keepLongest(String readPath, String writePath) {
+        String curTitle = "";
+        String newTitle = "";
+        String longLine = "";
+        String curLine = "";
+    
+        try (
+            Scanner lineScanner = new Scanner(new File(readPath));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(writePath, true))
+        ) {
+            while (lineScanner.hasNextLine()) {
+                curLine = lineScanner.nextLine();
                 Scanner titleScanner = new Scanner(curLine);
                 titleScanner.useDelimiter("/+");
-                newTitle=titleScanner.next();
-                //if our current line has a different title than the previous line, add our current longest line to the write file and then look for a new one with the new title
-                if(!curTitle.equals(newTitle))
-                {
-                    //this if statement prevents the first empty longLine
-                    if(!curTitle.equals(""))
-                    {
-                        try(FileWriter writer = new FileWriter(writePath,true))
-                        {
-                            writer.write(longLine+"\n");
-                        }
-                        catch(IOException e)
-                        {
-                            System.out.println("Error finding the file to write!");
-                            e.printStackTrace();
-                        }
+                newTitle = titleScanner.next();
+    
+                // If the current title is different from the previous line, add our current longest line to the write file and then look for a new one with the new title
+                if (!curTitle.equals(newTitle)) {
+                    if (!curTitle.isEmpty()) {
+                        writer.write(longLine + "\n");
                     }
-                    longLine="";
-                    curTitle=newTitle;
-                    System.out.println("Starting the section "+curTitle);
+                    longLine = "";
+                    curTitle = newTitle;
+                    System.out.println("Starting the section " + curTitle);
                 }
-                if(curLine.length()>longLine.length())
-                {longLine=curLine;}
+    
+                // Update the longest line if the current line is longer, also prevents the first empty longline
+                if (curLine.length() > longLine.length()) {
+                    longLine = curLine;
+                }
                 titleScanner.close();
             }
-            lineScanner.close();
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("Couldn't find the file to read!");
+    
+            // Write the last longest line after finishing the loop
+            if (!longLine.isEmpty()) {
+                writer.write(longLine + "\n");
+            }
+        } catch (IOException e) {
+            System.out.println("Error accessing the file!");
             e.printStackTrace();
         }
-
     }
+    
 
     //removes punctuation, decapitalizes the contents of the story, and separates the emotional labels from the story in a more easily parsable way
     public static void decapitalize(String readPath,String writePath)
