@@ -2,7 +2,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 // Fix the groupID
-    <groupId>com.storyreview.review</groupId>
+    <groupId>com.storyreview.project</groupId>
     <artifactId>DatabaseTutorial</artifactId>
     <version>0.0.1</version>
 
