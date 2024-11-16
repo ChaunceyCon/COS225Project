@@ -1,4 +1,4 @@
-package COS225Project.src.main.java.com.storyreview;
+package com.storyreview;
 
 import java.util.*;
 
@@ -16,14 +16,15 @@ public class DBHandler {
     MongoClient client;
     MongoDatabase database;
     MongoCollection<Document> storiesCollection;
-    
-    public DBHandler(String conString) {
-        // Use the provided connection string directly without redefining
+
+    public DBHandler() {
+        // Use the new connection string here
+        String conString = "mongodb+srv://chaunceyoconnell:SAxo0pQWMFYt43Rj@project225.vp8va.mongodb.net/?retryWrites=true&w=majority&appName=Project225";
         client = MongoClients.create(conString);
         database = client.getDatabase("admin");
         storiesCollection = database.getCollection("stories");
     }
-    
+
     public void addStory(String line) {
         Scanner parser = new Scanner(line);
         parser.useDelimiter(";;");
@@ -44,4 +45,17 @@ public class DBHandler {
             client.close();
         }
     }
+
+    public static void main(String[] args) {
+        // Create an instance of DBHandler
+        DBHandler dbHandler = new DBHandler();
+
+        // Example of adding a story to the database
+        String storyLine = "Title;;This is a story;;happy";
+        dbHandler.addStory(storyLine);
+
+        // Close the database connection
+        dbHandler.close();
+    }
 }
+
