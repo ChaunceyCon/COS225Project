@@ -17,17 +17,14 @@ public class DBHandler {
     MongoDatabase database;
     MongoCollection<Document> storiesCollection;
     
-    public DBHandler(String conString)
-    {
-        // Use your connection string here, possibly change to Chauncey's
-        String conString = "mongodb+srv://katemartell:21OeSfnibLvYYC98@cluster0.n4gsh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+    public DBHandler(String conString) {
+        // Use the provided connection string directly without redefining
         client = MongoClients.create(conString);
         database = client.getDatabase("admin");
         storiesCollection = database.getCollection("stories");
     }
     
-    public void addStory(String line)
-    {
+    public void addStory(String line) {
         Scanner parser = new Scanner(line);
         parser.useDelimiter(";;");
         try {
