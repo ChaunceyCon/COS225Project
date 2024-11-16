@@ -21,7 +21,11 @@ public class DBHandler {
         // Use the new connection string here
         String conString = "mongodb+srv://chaunceyoconnell:SAxo0pQWMFYt43Rj@project225.vp8va.mongodb.net/?retryWrites=true&w=majority&appName=Project225";
         client = MongoClients.create(conString);
-        database = client.getDatabase("admin");
+        
+        // Change the database to the new one you created (e.g., "project225")
+        database = client.getDatabase("project225");
+        
+        // Change the collection name if needed or keep "stories"
         storiesCollection = database.getCollection("stories");
     }
 
@@ -58,4 +62,3 @@ public class DBHandler {
         dbHandler.close();
     }
 }
-
