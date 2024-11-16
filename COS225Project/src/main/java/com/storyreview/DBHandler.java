@@ -40,6 +40,7 @@ public class DBHandler {
     }
 
     public void uploadFromFile(String filePath) {
+        System.out.println("Reading from file: " + filePath);  // Debug print to verify file path
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -48,10 +49,11 @@ public class DBHandler {
             }
             System.out.println("Successfully uploaded data from " + filePath);
         } catch (IOException e) {
-            System.err.println("Can't read from file: " + filePath);
+            System.err.println("Error reading from file: " + filePath);
             e.printStackTrace();
         }
     }
+    
 
     public void close() {
         if (client != null) {
@@ -64,8 +66,8 @@ public class DBHandler {
         DBHandler dbHandler = new DBHandler();
         
         // Upload data from 'final.txt' and 'raw.txt'
-        dbHandler.uploadFromFile("src/main/resources/final.txt");
-        dbHandler.uploadFromFile("src/main/resources/raw.txt");
+        dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/final.txt");
+        dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/raw.txt");
 
         // Close the connection
         dbHandler.close();
