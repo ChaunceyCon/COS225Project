@@ -19,6 +19,8 @@ public class DBHandler {
     
     public DBHandler(String conString)
     {
+        // Use your connection string here, possibly change to Chauncey's
+        String conString = "mongodb+srv://katemartell:21OeSfnibLvYYC98@cluster0.n4gsh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
         client = MongoClients.create(conString);
         database = client.getDatabase("admin");
         storiesCollection = database.getCollection("stories");
