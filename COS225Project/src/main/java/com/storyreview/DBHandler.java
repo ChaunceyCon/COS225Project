@@ -1,5 +1,6 @@
 package com.storyreview;
 
+import java.io.*;
 import java.util.*;
 
 import org.bson.Document;
@@ -9,8 +10,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import static com.mongodb.client.model.Filters.*;
-
 public class DBHandler {
 
     MongoClient client;
@@ -18,14 +17,10 @@ public class DBHandler {
     MongoCollection<Document> storiesCollection;
 
     public DBHandler() {
-        // Use the new connection string here
+        // Use your MongoDB connection string here
         String conString = "mongodb+srv://chaunceyoconnell:SAxo0pQWMFYt43Rj@project225.vp8va.mongodb.net/?retryWrites=true&w=majority&appName=Project225";
         client = MongoClients.create(conString);
-        
-        // Change the database to the new one you created (e.g., "project225")
         database = client.getDatabase("project225");
-        
-        // Change the collection name if needed or keep "stories"
         storiesCollection = database.getCollection("stories");
     }
 
@@ -44,6 +39,20 @@ public class DBHandler {
         }
     }
 
+    public void uploadFromFile(String filePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Add each line as a story to the database
+                addStory(line);
+            }
+            System.out.println("Successfully uploaded data from " + filePath);
+        } catch (IOException e) {
+            System.err.println("Can't read from file: " + filePath);
+            e.printStackTrace();
+        }
+    }
+
     public void close() {
         if (client != null) {
             client.close();
@@ -51,14 +60,15 @@ public class DBHandler {
     }
 
     public static void main(String[] args) {
-        // Create an instance of DBHandler
+        // Create DB Handler
         DBHandler dbHandler = new DBHandler();
+        
+        // Upload data from 'final.txt' and 'raw.txt'
+        dbHandler.uploadFromFile("src/main/resources/final.txt");
+        dbHandler.uploadFromFile("src/main/resources/raw.txt");
 
-        // Example of adding a story to the database
-        String storyLine = "Title;;This is a story;;happy";
-        dbHandler.addStory(storyLine);
-
-        // Close the database connection
+        // Close the connection
         dbHandler.close();
     }
 }
+
