@@ -66,9 +66,11 @@ public class DBHandler {
         DBHandler dbHandler = new DBHandler();
         
         // Upload data from 'final.txt' and 'raw.txt'
-        dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/final.txt");
-        dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/raw.txt");
-
+        //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/final.txt");
+        //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/raw.txt");
+        dbHandler.uploadFromFile("src/resources/final.txt");
+        dbHandler.uploadFromFile("src/resources/raw.txt");
+    
         // Close the connection
         dbHandler.close();
     }
