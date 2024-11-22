@@ -47,6 +47,7 @@ public class DBHandler {
                 line=lineScanner.nextLine();
                 addStory(line);
             }
+            lineScanner.close();
             System.out.println("Successfully uploaded data from " + filePath);
         } catch (IOException e) {
             System.err.println("Error reading from file: " + filePath);
