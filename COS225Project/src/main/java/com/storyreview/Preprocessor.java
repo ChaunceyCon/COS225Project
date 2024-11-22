@@ -167,4 +167,22 @@ public class Preprocessor {
     public static int getStoryCount() {
         return storyCount;
     }
+
+    //fills the specified .txt with all of the emotional labels used on the stories. should only need to be ran once
+    public static void getLabelList(String writePath) {
+        HashSet<String> emotions = new HashSet<String>();
+        for(Story s : storyCollection.values()) {
+            for(String e : s.getEmotions()) {
+                emotions.add(e);
+            }
+        }
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(writePath,true))) {
+            for(String e : emotions) {
+                writer.write(e+";;\n");
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+            System.out.println("Error writing to "+writePath+" for getLabelList!");
+        }
+    }
 }
