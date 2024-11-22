@@ -1,4 +1,4 @@
-package COS225Project.src.main.java.com.storyreview;
+package com.storyreview;
 
 import java.util.*;
 import java.io.*;
@@ -69,13 +69,11 @@ public class Preprocessor {
                 // Extract title, story, and labels 
                 title = storyScanner.next();
                 iniStory = storyScanner.next();
-                if (storyScanner.hasNext()) {
-                    labels = storyScanner.next();
-                }
+                labels = storyScanner.next();
                 
                 // Remove punctuation and decapitalize the story content
                 Scanner wordScanner = new Scanner(iniStory);
-                wordScanner.useDelimiter("\\W+");
+                wordScanner.useDelimiter("^[\\w|']+");
                 finStory = "";
                 while (wordScanner.hasNext()) {
                     finStory += wordScanner.next().toLowerCase();
