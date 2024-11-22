@@ -61,29 +61,5 @@ public class DBHandler {
             client.close();
         }
     }
-
-    public static void main(String[] args) {
-        try {
-            // Get connection string from file and create DB Handler
-            Scanner csScanner = new Scanner(new File("src/resources/conString.txt"));
-            String conString = csScanner.nextLine();
-            DBHandler dbHandler = new DBHandler(conString,"stories");
-            csScanner.close();
-
-            // Upload data from 'final.txt' and 'raw.txt'
-            //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/final.txt");
-            //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/raw.txt");
-            dbHandler.uploadFromFile("src/resources/final.txt");
-            dbHandler.uploadFromFile("src/resources/raw.txt");
-            
-            // Close the connection
-            dbHandler.close();
-        }
-        catch(FileNotFoundException e)
-        {
-            e.printStackTrace();
-            System.out.println("Error finding the connection string file!");
-        }
-    }
 }
 
