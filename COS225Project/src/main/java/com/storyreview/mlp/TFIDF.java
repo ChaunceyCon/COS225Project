@@ -42,5 +42,14 @@ public class TFIDF {
         }
     }
 
-    
+    //test method to print this class's HashMaps to make sure they're right
+    //TEST ONLY, if you run this method after processing the whole raw dataset the print output will be stupidly long
+    public void testPrint() {
+        System.out.println(TFHash);
+        System.out.println(wordFreq);
+        System.out.println(IDFHash);
+
+    }
+
+
 }
