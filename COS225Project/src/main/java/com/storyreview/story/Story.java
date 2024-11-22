@@ -19,4 +19,25 @@ public class Story {
         }
         //determine sentiment by seeing whether the emotions are primarily positive or negative (need to categorize all the emotions first)
     }
+
+    //get methods
+    public String getTitle() {
+        return title;
+    }
+
+    public String getIniStory() {
+        return iniStory;
+    }
+
+    public String getFinStory() {
+        return finStory;
+    }
+
+    public String getSentiment() {
+        return sentiment;
+    }
+
+    public ArrayList<String> getEmotions() {
+        return emotions;
+    }
 }
