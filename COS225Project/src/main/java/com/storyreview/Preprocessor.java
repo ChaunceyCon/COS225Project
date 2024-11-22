@@ -85,6 +85,7 @@ public class Preprocessor {
         String labels = "";
         String currLine = "";
         String word;
+        String emotion;
         //create the stopWords list
         fillStopWords();
         
@@ -127,13 +128,17 @@ public class Preprocessor {
                 wordScanner.close();
     
                 //Formats labels to be more parsable
+                labels=labels.substring(4);
                 Scanner labelScanner = new Scanner(labels);
-                labelScanner.useDelimiter("\\W+");
+                labelScanner.useDelimiter("(\\\"\\\",\\s\\\"\\\")|(\\\"\\\"\\]\\\")");
                 labels = "";
                 while (labelScanner.hasNext()) {
-                    labels += labelScanner.next().trim();
-                    if (labelScanner.hasNext()) {
-                        labels += "/";
+                    emotion=labelScanner.next().trim();
+                    if(!(emotion.contains(" "))) {
+                        labels += emotion;
+                        if (labelScanner.hasNext()) {
+                            labels += "/";
+                        }
                     }
                 }
                 labelScanner.close();
