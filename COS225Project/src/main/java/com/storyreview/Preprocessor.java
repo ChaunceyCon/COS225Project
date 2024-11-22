@@ -7,10 +7,7 @@ public class Preprocessor {
     
     //total number of stories (documents) in the dataset
     private static int storyCount;
-
-    public static int getStoryCount() {
-        return storyCount;
-    }
+    private static ArrayList<String> stopWords;
     
     //removes all but the longest version of each story from the raw data
     public static void keepLongest(String readPath, String writePath) {
@@ -57,14 +54,29 @@ public class Preprocessor {
         }
     }
 
+    //fills stopWords based on the stopWords.txt file
+    public static void fillStopWords() {
+        try(Scanner swScanner = new Scanner(new File("src/resources/conString.txt"))) {
+            while(swScanner.hasNextLine()) {
+                stopWords.add(swScanner.nextLine());
+            }
+        }
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error finding the file of stop-words!");
+        }
+    }
+
     //removes punctuation, decapitalizes the contents of the story, and separates the emotional labels from the story in a more easily parsable way
-    public static void decapitalize(String readPath, String writePath) {
+    public static void processFile(String readPath, String writePath) {
         storyCount=0;
         String title = "";
         String iniStory = "";
         String finStory = "";
         String labels = "";
         String currLine = "";
+        String word;
+        fillStopWords();
     
         try (Scanner lineScanner = new Scanner(new File(readPath));
             BufferedWriter writer = new BufferedWriter(new FileWriter(writePath, true))) {
@@ -79,14 +91,21 @@ public class Preprocessor {
                 iniStory = storyScanner.next();
                 labels = storyScanner.next();
                 
-                // Remove punctuation and decapitalize the story content
+                // Remove punctuation, stop-words, and decapitalize the story content
                 Scanner wordScanner = new Scanner(iniStory);
                 wordScanner.useDelimiter("^[\\w|']+");
                 finStory = "";
+                boolean first=true;
                 while (wordScanner.hasNext()) {
-                    finStory += wordScanner.next().toLowerCase();
-                    if (wordScanner.hasNext()) {
-                        finStory += " ";
+                    //decapitalizes the next word
+                    word=wordScanner.next().toLowerCase();
+                    //adds the word if it isn't a stop-word
+                    if(!stopWords.contains(word)) {
+                        //adds a space before the word unless it's the first word of the story
+                        if(!first) {
+                            finStory += " ";
+                        }
+                        finStory += word;
                     }
                 }
                 wordScanner.close();
@@ -106,6 +125,7 @@ public class Preprocessor {
                 // Write formatted data to the output file
                 writer.write(title + ";;" + finStory + ";;" + labels + "\n");
                 storyCount++;
+                //run TFIDF.processStory(finStory,title,storyCount) here
                 System.out.println("Processed section: " + title);
 
                 storyScanner.close();
@@ -115,5 +135,10 @@ public class Preprocessor {
             System.out.println("Error accessing the file!");
             e.printStackTrace();
         }
+    }
+
+    //get method for storyCount
+    public static int getStoryCount() {
+        return storyCount;
     }
 }
