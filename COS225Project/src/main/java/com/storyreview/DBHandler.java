@@ -41,10 +41,12 @@ public class DBHandler {
 
     public void uploadFromFile(String filePath) {
         System.out.println("Reading from file: " + filePath);  // Debug print to verify file path
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try {
+            Scanner lineScanner = new Scanner(new File(filePath));
             String line;
-            while ((line = br.readLine()) != null) {
+            while (lineScanner.hasNextLine()) {
                 // Add each line as a story to the database
+                line=lineScanner.nextLine();
                 addStory(line);
             }
             System.out.println("Successfully uploaded data from " + filePath);
