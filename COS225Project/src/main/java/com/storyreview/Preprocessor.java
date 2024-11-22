@@ -9,7 +9,7 @@ public class Preprocessor {
     
     //total number of stories (documents) in the dataset
     private static int storyCount;
-    private static ArrayList<String> stopWords;
+    private static ArrayList<String> stopWords = new ArrayList<String>();
     
     //removes all but the longest version of each story from the raw data
     public static void keepLongest(String readPath, String writePath) {
@@ -28,7 +28,7 @@ public class Preprocessor {
                 titleScanner.useDelimiter("/+");
                 newTitle = titleScanner.next();
 
-                // line has a different title than the previous line, add our current longest to the write file and then look for a new one with a new title
+                //if line has a different title than the previous line, add our current longest to the write file and then look for a new one with a new title
                 if (!curTitle.equals(newTitle)) {
                     if (!curTitle.equals("")) {
                         writer.write(longLine + "\n");
@@ -62,7 +62,7 @@ public class Preprocessor {
 
     //fills stopWords based on the stopWords.txt file
     public static void fillStopWords() {
-        try(Scanner swScanner = new Scanner(new File("src/resources/conString.txt"))) {
+        try(Scanner swScanner = new Scanner(new File("src/resources/stopWords.txt"))) {
             while(swScanner.hasNextLine()) {
                 stopWords.add(swScanner.nextLine());
             }
@@ -90,23 +90,24 @@ public class Preprocessor {
         
         System.out.println("Starting processFile");
     
-        try (Scanner lineScanner = new Scanner(new File(readPath));
-        BufferedWriter writer = new BufferedWriter(new FileWriter(writePath, true))) {
-
+        try (Scanner lineScanner = new Scanner(new File(readPath))) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(writePath, true));
+            
             //extract and process a story and associated data from each line of the specified file
             while (lineScanner.hasNextLine()) {
                 currLine = lineScanner.nextLine();
                 Scanner storyScanner = new Scanner(currLine);
-                storyScanner.useDelimiter(";;");
+                storyScanner.useDelimiter("/+");
     
                 // Extract title, unprocessed story, and labels 
                 title = storyScanner.next();
-                iniStory = storyScanner.next();
+                //this needs 2 .next()s bc there's always a / before the beginning of the story's final sentence
+                iniStory = storyScanner.next()+storyScanner.next();
                 labels = storyScanner.next();
                 
                 // Process the story by removing punctuation and stop-words and decapitalizing
                 Scanner wordScanner = new Scanner(iniStory);
-                wordScanner.useDelimiter("^[\\w|']+");
+                wordScanner.useDelimiter("[^[\\w|']]+");
                 finStory = "";
                 //boolean representing if the current output of wordScanner.next() would be the first word in the story
                 boolean first=true;
@@ -114,7 +115,7 @@ public class Preprocessor {
                     //decapitalizes the next word
                     word=wordScanner.next().toLowerCase();
                     //adds the word if it isn't a stop-word
-                    if(!stopWords.contains(word)) {
+                    if(!(stopWords.contains(word))) {
                         //adds a space before the word unless it's the first word of the story
                         if(!first) {
                             finStory += " ";
@@ -125,9 +126,9 @@ public class Preprocessor {
                 }
                 wordScanner.close();
     
-                // Normalize labels by removing extra spaces
+                //Formats labels to be more parsable
                 Scanner labelScanner = new Scanner(labels);
-                labelScanner.useDelimiter("/");
+                labelScanner.useDelimiter("\\W+");
                 labels = "";
                 while (labelScanner.hasNext()) {
                     labels += labelScanner.next().trim();
@@ -150,7 +151,9 @@ public class Preprocessor {
             //once all stories have been processed, fill storyProcessor's IDFHash
             storyProcessor.fillIDFHash(storyCount);
 
+            writer.close();
             System.out.println("Finished processFile!");
+
 
         } catch (IOException e) {
             System.out.println("Error accessing the file!");
