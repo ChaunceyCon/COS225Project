@@ -13,7 +13,7 @@ public class Story {
         finStory=fS;
         //fill emotions by parsing labels
         Scanner lScanner = new Scanner(labels);
-        lScanner.useDelimiter("/");
+        lScanner.useDelimiter("\\W");
         while(lScanner.hasNext()) {
             emotions.add(lScanner.next());
         }
