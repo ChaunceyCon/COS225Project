@@ -74,7 +74,7 @@ public class Preprocessor {
     }
 
     //removes punctuation, decapitalizes the contents of the story, and separates the emotional labels from the story in a more easily parsable way
-    public static void processFile(String readPath, String writePath) {
+    public static void processFile(String readPath, String writePath, TFIDF storyProcessor) {
         storyCount=0;
         //initialize all the random variables we'll need for processing
         String title = "";
@@ -85,8 +85,6 @@ public class Preprocessor {
         String word;
         //create the stopWords list
         fillStopWords();
-        //create the TFIDF object to effeciently get the necessary MLP data during processing
-        TFIDF storyProcessor = new TFIDF();
         
         System.out.println("Starting processFile");
     
