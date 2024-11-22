@@ -4,10 +4,12 @@ import java.util.*;
 import java.io.*;
 
 import com.storyreview.mlp.*;
+import com.storyreview.story.*;
 
 public class Preprocessor {
     
     //total number of stories (documents) in the dataset
+    private static HashMap<String,Story> storyCollection = new HashMap<String,Story>();
     private static int storyCount;
     private static ArrayList<String> stopWords = new ArrayList<String>();
     
@@ -140,6 +142,8 @@ public class Preprocessor {
                 writer.write(title + ";;" + finStory + ";;" + labels + "\n");
                 //increment storyCount for each story successfully added
                 storyCount++;
+                //create a Story object from the current story and add it to storyCollection. the key for the story is the same as the key for it's TF values within TFHash
+                storyCollection.put(""+storyCount+"-"+title,new Story(title,iniStory,finStory,labels));
                 //extract the necessary TFIDF information
                 storyProcessor.processStory(finStory,title,storyCount);
                 System.out.println("Processed section: " + title);
