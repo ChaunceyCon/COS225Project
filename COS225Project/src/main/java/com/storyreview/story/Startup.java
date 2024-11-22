@@ -11,11 +11,16 @@ public class Startup {
     
 
     public static void main(String[] args) {
-        //create the TFIDF object to effeciently get the necessary MLP data during processing
+        //vars for the paths of the final and intermediate files involved in preprocessing
+        String rawPath = "src/resources/raw.txt";
+        String shortPath = "src/resources/short.txt";
+        String finPath = "src/resources/final.txt";
+        
+        //create a TFIDF object to effeciently get the necessary MLP data during processing
         TFIDF storyProcessor = new TFIDF();
         //fill final.txt by processing raw.txt with Preprocesser
-        Preprocessor.keepLongest("src/resources/raw.txt","src/resources/short.txt");
-        Preprocessor.processFile("src/resources/short.txt","src/resources/final.txt",storyProcessor);
+        Preprocessor.keepLongest(rawPath,shortPath);
+        Preprocessor.processFile(shortPath,finPath,storyProcessor);
         
         try {
             // Get connection string from file and create DB Handler
@@ -35,5 +40,7 @@ public class Startup {
             e.printStackTrace();
             System.out.println("Error finding the connection string file!");
         }
+
+        //Shutdown.reset(shortPath,finPath);
     }
 }
