@@ -5,6 +5,13 @@ import java.io.*;
 
 public class Preprocessor {
     
+    //total number of stories (documents) in the dataset
+    private static int storyCount;
+
+    public static int getStoryCount() {
+        return storyCount;
+    }
+    
     //removes all but the longest version of each story from the raw data
     public static void keepLongest(String readPath, String writePath) {
         String curTitle = "";
@@ -52,6 +59,7 @@ public class Preprocessor {
 
     //removes punctuation, decapitalizes the contents of the story, and separates the emotional labels from the story in a more easily parsable way
     public static void decapitalize(String readPath, String writePath) {
+        storyCount=0;
         String title = "";
         String iniStory = "";
         String finStory = "";
@@ -59,7 +67,7 @@ public class Preprocessor {
         String currLine = "";
     
         try (Scanner lineScanner = new Scanner(new File(readPath));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(writePath, true))) {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(writePath, true))) {
     
             while (lineScanner.hasNextLine()) {
                 currLine = lineScanner.nextLine();
@@ -79,8 +87,6 @@ public class Preprocessor {
                     finStory += wordScanner.next().toLowerCase();
                     if (wordScanner.hasNext()) {
                         finStory += " ";
-                    } else {
-                        finStory += ";;";
                     }
                 }
                 wordScanner.close();
@@ -98,7 +104,8 @@ public class Preprocessor {
                 labelScanner.close();
     
                 // Write formatted data to the output file
-                writer.write(title + ";;" + finStory + labels + "\n");
+                writer.write(title + ";;" + finStory + ";;" + labels + "\n");
+                storyCount++;
                 System.out.println("Processed section: " + title);
 
                 storyScanner.close();
