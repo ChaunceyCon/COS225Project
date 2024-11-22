@@ -16,12 +16,10 @@ public class DBHandler {
     MongoDatabase database;
     MongoCollection<Document> storiesCollection;
 
-    public DBHandler() {
-        // Use your MongoDB connection string here
-        String conString = "mongodb+srv://chaunceyoconnell:SAxo0pQWMFYt43Rj@project225.vp8va.mongodb.net/?retryWrites=true&w=majority&appName=Project225";
+    public DBHandler(String conString,String colName) {
         client = MongoClients.create(conString);
         database = client.getDatabase("project225");
-        storiesCollection = database.getCollection("stories");
+        storiesCollection = database.getCollection(colName);
     }
 
     public void addStory(String line) {
@@ -64,17 +62,27 @@ public class DBHandler {
     }
 
     public static void main(String[] args) {
-        // Create DB Handler
-        DBHandler dbHandler = new DBHandler();
-        
-        // Upload data from 'final.txt' and 'raw.txt'
-        //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/final.txt");
-        //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/raw.txt");
-        dbHandler.uploadFromFile("src/resources/final.txt");
-        dbHandler.uploadFromFile("src/resources/raw.txt");
-    
-        // Close the connection
-        dbHandler.close();
+        try {
+            // Get connection string from file and create DB Handler
+            Scanner csScanner = new Scanner(new File("src/resources/conString.txt"));
+            String conString = csScanner.nextLine();
+            DBHandler dbHandler = new DBHandler(conString,"stories");
+            csScanner.close();
+
+            // Upload data from 'final.txt' and 'raw.txt'
+            //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/final.txt");
+            //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/raw.txt");
+            dbHandler.uploadFromFile("src/resources/final.txt");
+            dbHandler.uploadFromFile("src/resources/raw.txt");
+            
+            // Close the connection
+            dbHandler.close();
+        }
+        catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+            System.out.println("Error finding the connection string file!");
+        }
     }
 }
 
