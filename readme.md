@@ -1,12 +1,11 @@
 Intructions for terminal:
 
-Go into COS225PROJECT last folder (It's one of them)
+Go into (this repo)/COS225Project and run:
 
-Put mvn compile
+    mvn compile
 
-Then put mvn exec: java -Dexec.mainClass="com.storyreview.DBHandler"
+    mvn exec:java -Dexec.mainClass="com.storyreview.story.Startup"
 
-or: mvn exec: java -Dexec.mainClass="com.storyreview.DBHandler"
-
-
+First command compiles everything so package com.storyreview.whatever doesn't error anymore and DBHandler can import the MongoDB stuff.
+Second command actually runs the main() method in com.storyreview.story.Startup. Before executing this command make sure it's not going to flood MongoDB with a bunch of duplicate entries (comment out the try-catch block in main() that creates and uses the DBHandler).
 
