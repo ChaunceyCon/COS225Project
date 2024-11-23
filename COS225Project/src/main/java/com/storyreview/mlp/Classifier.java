@@ -13,6 +13,8 @@ public class Classifier {
     private HashMap<String,HashMap<String,Story>> conCollection = new HashMap<String,HashMap<String,Story>>();
     //HashMap listing how many times each word appears in the positive/negative collection
     private HashMap<String,HashMap<String,Integer>> conWordCounts = new HashMap<String,HashMap<String,Integer>>();
+    //total number of words in each context
+    private HashMap<String,Integer> conTotalWords = new HashMap<String,Integer>();
     //HashMap of log(# of occurences of String word in this context / # of total words in this context)
     private HashMap<String,HashMap<String,Double>> conWordRatios = new HashMap<String,HashMap<String,Double>>();
 
@@ -32,5 +34,24 @@ public class Classifier {
         HashMap<String,Double> negWordRatios = new HashMap<String,Double>();
         conWordRatios.put("positive",posWordRatios);
         conWordRatios.put("negative",negWordRatios);
+    }
+
+    //updates conCollection, conWordCounts, and conTotalWords based on the Story provided
+    public void processStory(Story s) {
+        //get whether the Story is positive or negative to edit the right values
+        String context = s.getSentiment();
+        //add Story to the appropriate collection
+        conCollection.get(context).put(s.getKey(),s);
+
+        Scanner wordScanner = new Scanner(s.getFinStory());
+        String word;
+        while(wordScanner.hasNext()) {
+            word=wordScanner.next();
+            //add 1 to word's value in the appropriate wordCounts hashmap, or set it to 1 if word isn't in the hashmap yet
+            conWordCounts.get(context).merge(word,1,(c,n) -> c+1);
+            //add 1 to the appropriate context's total wordcount, or set it to 1 if it doesn't yet have a value
+            conTotalWords.merge(context,1,(c,n) -> c+1);
+        }
+        wordScanner.close();
     }
 }
