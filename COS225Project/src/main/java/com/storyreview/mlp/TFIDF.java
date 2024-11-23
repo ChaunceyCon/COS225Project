@@ -56,5 +56,11 @@ public class TFIDF {
 
     }
 
+    //gets the TFIDF value of a specified word and document
+    public double getTFIDF(String word,Story s) {
+        int TF = TFHash.get(s.getKey()).get(word);
+        double IDF = IDFHash.get(word);
+        return TF*IDF;
+    }
 
 }
