@@ -14,7 +14,7 @@ public class TFIDF {
     private HashMap<String,Integer> wordFreq = new HashMap<String,Integer>();
 
     //gets all the necessary TFIDF information from a single story, to be run during processing
-    public void processStory(Story s,int storyNum) {
+    public void processStory(Story s) {
         Scanner wordScanner = new Scanner(s.getFinStory());
         String word;
         HashMap<String,Integer> storyTF = new HashMap<String,Integer>();
@@ -32,7 +32,7 @@ public class TFIDF {
         }
         wordScanner.close();
         //add storyTF to the main TFHash w an id based off its title and number
-        TFHash.put(""+storyNum+"-"+s.getTitle(),storyTF);
+        TFHash.put(s.getKey(),storyTF);
     }
 
     //calculates IDFHash based on the final values for Preprocessor.storyCount and this.wordFreq
