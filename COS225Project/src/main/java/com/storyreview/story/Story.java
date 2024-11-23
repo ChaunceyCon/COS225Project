@@ -5,12 +5,14 @@ import java.util.*;
 public class Story {
     
     private String title,iniStory,finStory,sentiment;
+    private int number;
     private ArrayList<String> emotions = new ArrayList<String>();
 
-    public Story(String t,String iS,String fS,String labels) {
+    public Story(String t,String iS,String fS,String labels,int n) {
         title=t;
         iniStory=iS;
         finStory=fS;
+        number = n;
         //fill emotions by parsing labels
         Scanner lScanner = new Scanner(labels);
         lScanner.useDelimiter("\\W");
@@ -35,6 +37,10 @@ public class Story {
 
     public String getSentiment() {
         return sentiment;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public ArrayList<String> getEmotions() {
