@@ -75,7 +75,33 @@ public class Preprocessor {
         }
     }
 
-    //removes punctuation, decapitalizes the contents of the story, and separates the emotional labels from the story in a more easily parsable way
+    // Process a story by removing punctuation and stop-words and decapitalizing
+    public static String deformat(String iniStory) {
+        Scanner wordScanner = new Scanner(iniStory);
+        //matches any number of characters that are neither a letter or a '
+        wordScanner.useDelimiter("[^[\\w|']]+");
+        String finStory = "";
+        String word;
+        //boolean representing if the current output of wordScanner.next() would be the first word in the story
+        boolean first=true;
+        while (wordScanner.hasNext()) {
+            //decapitalizes the next word
+            word=wordScanner.next().toLowerCase();
+            //adds the word if it isn't a stop-word
+            if(!(stopWords.contains(word))) {
+                //adds a space before the word unless it's the first word of the story
+                if(!first) {
+                    finStory += " ";
+                }
+                finStory += word;
+            }
+            first=false;
+        }
+        wordScanner.close();
+        return finStory;
+    }
+
+    //takes a file with each line representing a story object and parses it, simultaneously getting the initial MLP values
     public static void processFile(String readPath, String writePath, TFIDF TFIDFProcessor) {
         storyCount=0;
         //initialize all the random variables we'll need for processing
@@ -84,7 +110,6 @@ public class Preprocessor {
         String finStory = "";
         String labels = "";
         String currLine = "";
-        String word;
         String emotion;
         //create the stopWords list
         fillStopWords();
@@ -106,27 +131,8 @@ public class Preprocessor {
                 iniStory = storyScanner.next()+storyScanner.next();
                 labels = storyScanner.next();
                 
-                // Process the story by removing punctuation and stop-words and decapitalizing
-                Scanner wordScanner = new Scanner(iniStory);
-                //matches any number of characters that are neither a letter or a '
-                wordScanner.useDelimiter("[^[\\w|']]+");
-                finStory = "";
-                //boolean representing if the current output of wordScanner.next() would be the first word in the story
-                boolean first=true;
-                while (wordScanner.hasNext()) {
-                    //decapitalizes the next word
-                    word=wordScanner.next().toLowerCase();
-                    //adds the word if it isn't a stop-word
-                    if(!(stopWords.contains(word))) {
-                        //adds a space before the word unless it's the first word of the story
-                        if(!first) {
-                            finStory += " ";
-                        }
-                        finStory += word;
-                    }
-                    first=false;
-                }
-                wordScanner.close();
+                //puts the story itself in the correct form for mlp processing
+                finStory=deformat(iniStory);
     
                 //Formats labels to be more parsable
                 labels=labels.substring(4);
