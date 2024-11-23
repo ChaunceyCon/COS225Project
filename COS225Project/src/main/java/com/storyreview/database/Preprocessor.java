@@ -158,7 +158,7 @@ public class Preprocessor {
                 Story s = new Story(title,iniStory,finStory,labels,storyCount);
                 storyCollection.put(""+storyCount+"-"+title,s);
                 //extract the necessary TFIDF information
-                TFIDFProcessor.processStory(s);
+                TFIDFProcessor.processStory(s,true);
                 System.out.println("Processed section: " + title);
 
                 storyScanner.close();

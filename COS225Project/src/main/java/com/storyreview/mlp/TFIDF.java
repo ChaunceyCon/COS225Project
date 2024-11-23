@@ -14,21 +14,24 @@ public class TFIDF {
     private HashMap<String,Integer> wordFreq = new HashMap<String,Integer>();
 
     //gets all the necessary TFIDF information from a single story, to be run during processing
-    public void processStory(Story s) {
+    public void processStory(Story s,boolean isDataStory) {
         Scanner wordScanner = new Scanner(s.getFinStory());
         String word;
         HashMap<String,Integer> storyTF = new HashMap<String,Integer>();
         //look at each word in the story to set the appropriate TFIDF values
         while(wordScanner.hasNext()) {
             word=wordScanner.next();
-            //add 1 to word's wordFreq if this is the first time seeing word in this story
-            if(!storyTF.containsKey(word)) {
-                wordFreq.merge(word,1,(c,n) -> c+1);
+            //only update wordFreq and vocab if the Story is from the dataset, not the user
+            if(isDataStory) {
+                //add 1 to word's wordFreq if this is the first time seeing word in this story
+                if(!storyTF.containsKey(word)) {
+                    wordFreq.merge(word,1,(c,n) -> c+1);
+                }
+                //add word to vocab
+                vocab.add(word);
             }
             //add 1 to the current word's TF or set it to 1 if it doesn't exist yet
             storyTF.merge(word,1,(c,n) -> c+1);
-            //add word to vocab
-            vocab.add(word);
         }
         wordScanner.close();
         //add storyTF to the main TFHash w an id based off its title and number
