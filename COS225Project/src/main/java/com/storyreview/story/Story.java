@@ -43,6 +43,10 @@ public class Story {
         return number;
     }
 
+    public String getKey() {
+        return ""+number+"-"+title;
+    }
+
     public ArrayList<String> getEmotions() {
         return emotions;
     }
