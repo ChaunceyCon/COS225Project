@@ -76,7 +76,7 @@ public class Preprocessor {
     }
 
     //removes punctuation, decapitalizes the contents of the story, and separates the emotional labels from the story in a more easily parsable way
-    public static void processFile(String readPath, String writePath, TFIDF storyProcessor) {
+    public static void processFile(String readPath, String writePath, TFIDF TFIDFProcessor) {
         storyCount=0;
         //initialize all the random variables we'll need for processing
         String title = "";
@@ -152,13 +152,13 @@ public class Preprocessor {
                 Story s = new Story(title,iniStory,finStory,labels);
                 storyCollection.put(""+storyCount+"-"+title,s);
                 //extract the necessary TFIDF information
-                storyProcessor.processStory(s,storyCount);
+                TFIDFProcessor.processStory(s,storyCount);
                 System.out.println("Processed section: " + title);
 
                 storyScanner.close();
             }
-            //once all stories have been processed, fill storyProcessor's IDFHash
-            storyProcessor.fillIDFHash(storyCount);
+            //once all stories have been processed, fill TFIDFProcessor's IDFHash
+            TFIDFProcessor.fillIDFHash(storyCount);
 
             writer.close();
             System.out.println("Finished processFile!");
