@@ -149,9 +149,10 @@ public class Preprocessor {
                 //increment storyCount for each story successfully added
                 storyCount++;
                 //create a Story object from the current story and add it to storyCollection. the key for the story is the same as the key for it's TF values within TFHash
-                storyCollection.put(""+storyCount+"-"+title,new Story(title,iniStory,finStory,labels));
+                Story s = new Story(title,iniStory,finStory,labels);
+                storyCollection.put(""+storyCount+"-"+title,s);
                 //extract the necessary TFIDF information
-                storyProcessor.processStory(finStory,title,storyCount);
+                storyProcessor.processStory(s,storyCount);
                 System.out.println("Processed section: " + title);
 
                 storyScanner.close();
