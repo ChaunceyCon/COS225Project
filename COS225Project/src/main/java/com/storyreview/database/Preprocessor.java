@@ -1,4 +1,4 @@
-package com.storyreview;
+package com.storyreview.database;
 
 import java.util.*;
 import java.io.*;
@@ -108,6 +108,7 @@ public class Preprocessor {
                 
                 // Process the story by removing punctuation and stop-words and decapitalizing
                 Scanner wordScanner = new Scanner(iniStory);
+                //matches any number of characters that are neither a letter or a '
                 wordScanner.useDelimiter("[^[\\w|']]+");
                 finStory = "";
                 //boolean representing if the current output of wordScanner.next() would be the first word in the story
