@@ -16,12 +16,10 @@ public class DBHandler {
     MongoDatabase database;
     MongoCollection<Document> storiesCollection;
 
-    public DBHandler() {
-        // Use your MongoDB connection string here
-        String conString = "mongodb+srv://chaunceyoconnell:SAxo0pQWMFYt43Rj@project225.vp8va.mongodb.net/?retryWrites=true&w=majority&appName=Project225";
+    public DBHandler(String conString,String colName) {
         client = MongoClients.create(conString);
         database = client.getDatabase("project225");
-        storiesCollection = database.getCollection("stories");
+        storiesCollection = database.getCollection(colName);
     }
 
     public void addStory(String line) {
@@ -41,12 +39,15 @@ public class DBHandler {
 
     public void uploadFromFile(String filePath) {
         System.out.println("Reading from file: " + filePath);  // Debug print to verify file path
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try {
+            Scanner lineScanner = new Scanner(new File(filePath));
             String line;
-            while ((line = br.readLine()) != null) {
+            while (lineScanner.hasNextLine()) {
                 // Add each line as a story to the database
+                line=lineScanner.nextLine();
                 addStory(line);
             }
+            lineScanner.close();
             System.out.println("Successfully uploaded data from " + filePath);
         } catch (IOException e) {
             System.err.println("Error reading from file: " + filePath);
@@ -59,20 +60,6 @@ public class DBHandler {
         if (client != null) {
             client.close();
         }
-    }
-
-    public static void main(String[] args) {
-        // Create DB Handler
-        DBHandler dbHandler = new DBHandler();
-        
-        // Upload data from 'final.txt' and 'raw.txt'
-        //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/final.txt");
-        //dbHandler.uploadFromFile("/mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/resources/raw.txt");
-        dbHandler.uploadFromFile("src/resources/final.txt");
-        dbHandler.uploadFromFile("src/resources/raw.txt");
-    
-        // Close the connection
-        dbHandler.close();
     }
 }
 
