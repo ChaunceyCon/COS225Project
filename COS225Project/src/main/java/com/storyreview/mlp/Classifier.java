@@ -36,22 +36,53 @@ public class Classifier {
         conWordRatios.put("negative",negWordRatios);
     }
 
-    //updates conCollection, conWordCounts, and conTotalWords based on the Story provided
-    public void processStory(Story s) {
+    //updates conCollection, conWordCounts, and conTotalWords based on the Story provided, returning boolean storySuccessfullyProcessed
+    public boolean processStory(Story s) {
         //get whether the Story is positive or negative to edit the right values
         String context = s.getSentiment();
-        //add Story to the appropriate collection
-        conCollection.get(context).put(s.getKey(),s);
+        //only attempt to process the story if it was successfully categorized from its labels
+        if(context.equals("positive")||context.equals("negative")) {
+            //add Story to the appropriate collection
+            conCollection.get(context).put(s.getKey(),s);
 
-        Scanner wordScanner = new Scanner(s.getFinStory());
-        String word;
-        while(wordScanner.hasNext()) {
-            word=wordScanner.next();
-            //add 1 to word's value in the appropriate wordCounts hashmap, or set it to 1 if word isn't in the hashmap yet
-            conWordCounts.get(context).merge(word,1,(c,n) -> c+1);
-            //add 1 to the appropriate context's total wordcount, or set it to 1 if it doesn't yet have a value
-            conTotalWords.merge(context,1,(c,n) -> c+1);
+            Scanner wordScanner = new Scanner(s.getFinStory());
+            String word;
+            while(wordScanner.hasNext()) {
+                word=wordScanner.next();
+                //add 1 to word's value in the appropriate wordCounts hashmap, or set it to 1 if word isn't in the hashmap yet
+                conWordCounts.get(context).merge(word,1,(c,n) -> c+1);
+                //add 1 to the appropriate context's total wordcount, or set it to 1 if it doesn't yet have a value
+                conTotalWords.merge(context,1,(c,n) -> c+1);
+            }
+            wordScanner.close();
+            return true;
         }
-        wordScanner.close();
+        else {
+            return false;
+        }
+    }
+
+    //calculates final values for conProb and conWordRatios once all Storys have been processed
+    public void finishProcessing() {
+        //total number of documents 
+        int classifiedDocCount = conCollection.get("positive").size()+conCollection.get("negative").size();
+        //set conProb's two values
+        double posProb = (conCollection.get("positive").size())/classifiedDocCount;
+        double negProb = (conCollection.get("negative").size())/classifiedDocCount;
+        conProb.put("positive",posProb);
+        conProb.put("negative",negProb);
+
+        double ratio;
+        //fill posWordRatios
+        for(String word : conWordCounts.get("positive").keySet()) {
+            ratio=Math.log(conWordCounts.get("positive").get(word)/conTotalWords.get("positive"));
+            conWordRatios.get("positive").put(word,ratio);
+        }
+        //fill negWordRatios
+        for(String word : conWordCounts.get("negative").keySet()) {
+            ratio=Math.log(conWordCounts.get("negative").get(word)/conTotalWords.get("negative"));
+            conWordRatios.get("negative").put(word,ratio);
+        }
+
     }
 }
