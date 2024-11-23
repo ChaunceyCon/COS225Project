@@ -3,6 +3,8 @@ package com.storyreview.database;
 import java.io.*;
 import java.util.*;
 
+import com.storyreview.story.*;
+
 import org.bson.Document;
 
 import com.mongodb.client.MongoClient;
@@ -22,39 +24,25 @@ public class DBHandler {
         storiesCollection = database.getCollection(colName);
     }
 
-    public void addStory(String line) {
-        Scanner parser = new Scanner(line);
-        parser.useDelimiter(";;");
-        try {
-            String title = parser.next();
-            String story = parser.next();
-            String labels = parser.next();
-            Document targetStory = new Document();
-            targetStory.append("title", title).append("story", story).append("labels", labels);
-            storiesCollection.insertOne(targetStory);
-        } finally {
-            parser.close();
-        }
-    }
-
-    public void uploadFromFile(String filePath) {
-        System.out.println("Reading from file: " + filePath);  // Debug print to verify file path
-        try {
-            Scanner lineScanner = new Scanner(new File(filePath));
-            String line;
-            while (lineScanner.hasNextLine()) {
-                // Add each line as a story to the database
-                line=lineScanner.nextLine();
-                addStory(line);
+    //adds a story to Mongo from a Story object
+    public void addStory(Story s) {
+        String title = s.getTitle();
+        String story = s.getFinStory();
+        //recombine Story's emotion list into a single string
+        ArrayList<String> emotions = s.getEmotions();
+        String labels = "";
+        for(int i=0;i<(emotions.size());i++) {
+            labels+=emotions.get(i);
+            if(!(i==emotions.size()-1)) {
+                labels+="/";
             }
-            lineScanner.close();
-            System.out.println("Successfully uploaded data from " + filePath);
-        } catch (IOException e) {
-            System.err.println("Error reading from file: " + filePath);
-            e.printStackTrace();
         }
+
+        //add to Mongo
+        Document targetStory = new Document();
+        targetStory.append("title", title).append("story", story).append("labels", labels);
+        storiesCollection.insertOne(targetStory);
     }
-    
 
     public void close() {
         if (client != null) {
