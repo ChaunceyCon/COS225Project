@@ -169,9 +169,13 @@ public class Preprocessor {
         }
     }
 
-    //get method for storyCount
+    //get methods
     public static int getStoryCount() {
         return storyCount;
+    }
+
+    public static HashMap<String,Story> getStoryCollection() {
+        return storyCollection;
     }
 
     //fills the specified .txt with all of the emotional labels used on the stories. should only need to be ran once
