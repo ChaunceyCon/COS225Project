@@ -1,4 +1,4 @@
-package com.storyreview;
+package com.storyreview.database;
 
 import java.io.*;
 import java.util.*;

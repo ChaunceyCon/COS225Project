@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import com.storyreview.*;
+import com.storyreview.database.*;
+import com.storyreview.menu.*;
 import com.storyreview.mlp.TFIDF;
 
 public class Startup {
