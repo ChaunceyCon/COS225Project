@@ -63,6 +63,11 @@ public class TFIDF {
         return TF*IDF;
     }
 
+    //method used to remove userStory from TFHash so classifyUserStory() can be run again
+    public void trimTFHash(String key) {
+        TFHash.remove(key);
+    }
+
     //get methods
     public HashMap<String,HashMap<String,Integer>> getTFHash() {
         return TFHash;
