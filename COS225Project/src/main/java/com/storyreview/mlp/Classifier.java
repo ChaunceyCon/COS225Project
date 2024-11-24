@@ -2,6 +2,7 @@ package com.storyreview.mlp;
 
 import java.util.*;
 
+import com.storyreview.database.*;
 import com.storyreview.story.*;
 
 public class Classifier {
@@ -83,6 +84,31 @@ public class Classifier {
             ratio=Math.log(conWordCounts.get("negative").get(word)/conTotalWords.get("negative"));
             conWordRatios.get("negative").put(word,ratio);
         }
+    }
 
+    public String classifyUserStory(String iniStory,TFIDF TFIDFProcessor) {
+        //create a Story object from the user's story and run TFIDF.processStory on it to add it's TF HashMap to TFIDF.TFHash
+        Story userStory = new Story("user",iniStory,Preprocessor.deformat(iniStory),"",0);
+        TFIDFProcessor.processStory(userStory, false);
+
+        //add to the positive and negative chances based on the wordRatios and TFIDFs of each word in the user's story
+        Scanner wordScanner = new Scanner(userStory.getFinStory());
+        String word;
+        double posChance=Math.log(conProb.get("positive"));
+        double negChance=Math.log(conProb.get("negative"));
+        while(wordScanner.hasNext()) {
+            word = wordScanner.next();
+            //need to add code to only run the below if a conWordRatios value exists for word
+            posChance+=conWordRatios.get("positive").get(word)*TFIDFProcessor.getTFIDF(word,userStory);
+            negChance+=conWordRatios.get("negative").get(word)*TFIDFProcessor.getTFIDF(word,userStory);
+        }
+        //removes userStory's HashMap from TFHash so this method can be used again
+        TFIDFProcessor.trimTFHash(userStory.getKey());
+        if(negChance>posChance) {
+            return "negative";
+        }
+        else {
+            return "positive";
+        }
     }
 }
