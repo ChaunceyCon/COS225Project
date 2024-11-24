@@ -63,4 +63,21 @@ public class TFIDF {
         return TF*IDF;
     }
 
+    //get methods
+    public HashMap<String,HashMap<String,Integer>> getTFHash() {
+        return TFHash;
+    }
+
+    public HashMap<String,Double> getIDFHash() {
+        return IDFHash;
+    }
+
+    public HashSet<String> getVocab() {
+        return vocab;
+    }
+
+    public HashMap<String,Integer> getWordFreq() {
+        return wordFreq;
+    }
+
 }
