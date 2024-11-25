@@ -1,1 +1,5 @@
 *.class
+*.lst
+COS225Project/src/resources/conString.txt
+COS225Project/src/resources/short.txt
+COS225Project/src/resources/final.txt
