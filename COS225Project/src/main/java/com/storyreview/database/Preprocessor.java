@@ -213,7 +213,7 @@ public class Preprocessor {
     public static void sortAllLabels() {
         try(Scanner labelScanner = new Scanner(new File("src/resources/labelList.txt"))) {
             //setup the delimiter so .next() will alternate between the emotion and its categorization
-            labelScanner.useDelimiter(";;|\\n");
+            labelScanner.useDelimiter("(;;)|\n");
             //create writers to add to the output files
             BufferedWriter posWriter = new BufferedWriter(new FileWriter("src/resources/posLabels.txt",true));
             BufferedWriter negWriter = new BufferedWriter(new FileWriter("src/resources/negLabels.txt",true));
@@ -226,14 +226,16 @@ public class Preprocessor {
                 emotion=labelScanner.next();
                 //context is set to the token after the emotion, which will be p or n depending on the emotion
                 context=labelScanner.next();
-                if(context.equals("p")) {
+                context.trim();
+                if(context.contains("p")) {
                     posWriter.write(emotion+"\n");
                 }
-                else if(context.equals("n")) {
+                else if(context.contains("n")) {
                     negWriter.write(emotion+"\n");
                 }
                 else {
                     System.out.println("Error categorizing "+emotion+" on line "+lineNum+"!");
+                    System.out.println("Context was:"+context+".");
                 }
                 lineNum++;
             }
