@@ -2,6 +2,8 @@ package com.storyreview.story;
 
 import java.util.*;
 
+import com.storyreview.database.Preprocessor;
+
 public class Story {
     
     private String title,iniStory,finStory,sentiment;
@@ -19,7 +21,30 @@ public class Story {
         while(lScanner.hasNext()) {
             emotions.add(lScanner.next());
         }
-        //determine sentiment by seeing whether the emotions are primarily positive or negative (need to categorize all the emotions first)
+        //determine sentiment by seeing whether the emotions are primarily positive or negative
+        HashSet<String> posLabels = Preprocessor.getPosLabels();
+        HashSet<String> negLabels = Preprocessor.getNegLabels();
+        //tally up how many of this Story's labels are positive and negative
+        int posCount=0;
+        int negCount=0;
+        for(String e : emotions) {
+            if(posLabels.contains(e)) {
+                posCount++;
+            }
+            else if(negLabels.contains(e)) {
+                negCount++;
+            }
+        }
+        //set sentiment based on whichever is higher, or to null if both are 0
+        if(posCount==0&&negCount==0) {
+            sentiment="";
+        }
+        else if(posCount>=negCount) {
+            sentiment="positive";
+        }
+        else if(negCount>posCount) {
+            sentiment="negative";
+        }
     }
 
     //get methods
