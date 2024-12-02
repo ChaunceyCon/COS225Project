@@ -76,12 +76,22 @@ public class Classifier {
         double ratio;
         //fill posWordRatios
         for(String word : conWordCounts.get("positive").keySet()) {
-            ratio=Math.log(conWordCounts.get("positive").get(word)/conTotalWords.get("positive"));
+            if(conWordCounts.get("positive").containsKey(word)) {
+                ratio=Math.log((conWordCounts.get("positive").get(word)+1)/conTotalWords.get("positive"));
+            }
+            else {
+                ratio=Math.log(1/conTotalWords.get("positive"));
+            }
             conWordRatios.get("positive").put(word,ratio);
         }
         //fill negWordRatios
         for(String word : conWordCounts.get("negative").keySet()) {
-            ratio=Math.log(conWordCounts.get("negative").get(word)/conTotalWords.get("negative"));
+            if(conWordCounts.get("negative").containsKey(word)) {
+                ratio=Math.log((conWordCounts.get("negative").get(word)+1)/conTotalWords.get("negative"));
+            }
+            else {
+                ratio=Math.log(1/conTotalWords.get("negative"));
+            }
             conWordRatios.get("negative").put(word,ratio);
         }
     }
