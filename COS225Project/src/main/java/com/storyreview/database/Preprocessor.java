@@ -129,7 +129,7 @@ public class Preprocessor {
     }
 
     //takes a file with each line representing a story object and parses it, simultaneously getting the initial MLP values
-    public static void processFile(String readPath, String writePath, TFIDF TFIDFProcessor) {
+    public static void processFile(String readPath, String writePath, TFIDF TFIDFProcessor,Classifier classifier) {
         storyCount=0;
         //initialize all the random variables we'll need for processing
         String title = "";
@@ -185,14 +185,17 @@ public class Preprocessor {
                 //create a Story object from the current story and add it to storyCollection. the key for the story is the same as the key for it's TF values within TFHash
                 Story s = new Story(title,iniStory,finStory,labels,storyCount);
                 storyCollection.put(""+storyCount+"-"+title,s);
-                //extract the necessary TFIDF information
+                //extract the necessary MLP information
                 TFIDFProcessor.processStory(s,true);
+                classifier.processStory(s);
+
                 System.out.println("Processed section: " + title);
 
                 storyScanner.close();
             }
-            //once all stories have been processed, fill TFIDFProcessor's IDFHash
+            //once all stories have been processed, fill TFIDFProcessor's IDFHash and finish classification processing
             TFIDFProcessor.fillIDFHash(storyCount);
+            classifier.finishProcessing();
 
             writer.close();
             System.out.println("Finished processFile!");
