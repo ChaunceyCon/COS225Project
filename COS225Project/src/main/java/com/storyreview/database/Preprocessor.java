@@ -12,6 +12,9 @@ public class Preprocessor {
     private static HashMap<String,Story> storyCollection = new HashMap<String,Story>();
     private static int storyCount;
     private static ArrayList<String> stopWords = new ArrayList<String>();
+    //lists of labels so each Story can categorize itself upon instantiation
+    private static ArrayList<String> posLabels = new ArrayList<String>();
+    private static ArrayList<String> negLabels = new ArrayList<String>();
     
     //removes all but the longest version of each story from the raw data
     public static void keepLongest(String readPath, String writePath) {
@@ -75,6 +78,8 @@ public class Preprocessor {
         }
     }
 
+    //need to create fillLabelLists() to fill posLabels and negLabels with the values from sortAllLabels()'s two files
+
     // Process a story by removing punctuation and stop-words and decapitalizing
     public static String deformat(String iniStory) {
         Scanner wordScanner = new Scanner(iniStory);
@@ -113,6 +118,7 @@ public class Preprocessor {
         String emotion;
         //create the stopWords list
         fillStopWords();
+        //need to run fillLabelLists()
         
         System.out.println("Starting processFile");
     
@@ -202,4 +208,6 @@ public class Preprocessor {
             System.out.println("Error writing to "+writePath+" for getLabelList!");
         }
     }
+
+    //need to create one-time sortAllLabels() function to fill two .txts with all of the positive and negative labels from labelList.txt
 }
