@@ -13,8 +13,8 @@ public class Preprocessor {
     private static int storyCount;
     private static ArrayList<String> stopWords = new ArrayList<String>();
     //lists of labels so each Story can categorize itself upon instantiation
-    private static ArrayList<String> posLabels = new ArrayList<String>();
-    private static ArrayList<String> negLabels = new ArrayList<String>();
+    private static HashSet<String> posLabels = new HashSet<String>();
+    private static HashSet<String> negLabels = new HashSet<String>();
     
     //removes all but the longest version of each story from the raw data
     public static void keepLongest(String readPath, String writePath) {
@@ -78,7 +78,29 @@ public class Preprocessor {
         }
     }
 
-    //need to create fillLabelLists() to fill posLabels and negLabels with the values from sortAllLabels()'s two files
+    //fill posLabels and negLabels with the values from sortAllLabels()'s two files
+    public static void fillLabelLists() {
+        //posLabels
+        try(Scanner lineScanner = new Scanner(new File("src/resources/posLabels.txt"))) {
+            while(lineScanner.hasNextLine()) {
+                posLabels.add(lineScanner.next());
+            }
+        }
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error finding posLabels.txt!");
+        }
+        //negLabels
+        try(Scanner lineScanner = new Scanner(new File("src/resources/negLabels.txt"))) {
+            while(lineScanner.hasNextLine()) {
+                negLabels.add(lineScanner.next());
+            }
+        }
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Error finding negLabels.txt!");
+        }
+    }
 
     // Process a story by removing punctuation and stop-words and decapitalizing
     public static String deformat(String iniStory) {
@@ -116,9 +138,9 @@ public class Preprocessor {
         String labels = "";
         String currLine = "";
         String emotion;
-        //create the stopWords list
+        //create the necessary lists
         fillStopWords();
-        //need to run fillLabelLists()
+        fillLabelLists();
         
         System.out.println("Starting processFile");
     
@@ -209,7 +231,7 @@ public class Preprocessor {
         }
     }
 
-    //need to create one-time sortAllLabels() function to fill two .txts with all of the positive and negative labels from labelList.txt
+    //one-time function to fill two .txts with all of the positive and negative labels from labelList.txt
     public static void sortAllLabels() {
         try(Scanner labelScanner = new Scanner(new File("src/resources/labelList.txt"))) {
             //setup the delimiter so .next() will alternate between the emotion and its categorization
