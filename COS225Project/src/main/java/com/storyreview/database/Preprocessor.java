@@ -210,4 +210,39 @@ public class Preprocessor {
     }
 
     //need to create one-time sortAllLabels() function to fill two .txts with all of the positive and negative labels from labelList.txt
+    public static void sortAllLabels() {
+        try(Scanner labelScanner = new Scanner(new File("src/resources/labelList.txt"))) {
+            //setup the delimiter so .next() will alternate between the emotion and its categorization
+            labelScanner.useDelimiter(";;|\\n");
+            //create writers to add to the output files
+            BufferedWriter posWriter = new BufferedWriter(new FileWriter("src/resources/posLabels.txt",true));
+            BufferedWriter negWriter = new BufferedWriter(new FileWriter("src/resources/negLabels.txt",true));
+            String emotion;
+            String context;
+            int lineNum = 1;
+            //loop through the input file and sort everything
+            while(labelScanner.hasNext()) {
+                //label scanner gets the next emotion
+                emotion=labelScanner.next();
+                //context is set to the token after the emotion, which will be p or n depending on the emotion
+                context=labelScanner.next();
+                if(context.equals("p")) {
+                    posWriter.write(emotion+"\n");
+                }
+                else if(context.equals("n")) {
+                    negWriter.write(emotion+"\n");
+                }
+                else {
+                    System.out.println("Error categorizing "+emotion+" on line "+lineNum+"!");
+                }
+                lineNum++;
+            }
+            posWriter.close();
+            negWriter.close();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+            System.out.println("Error sorting from labelList.txt!");
+        }
+    }
 }
