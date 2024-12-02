@@ -213,6 +213,14 @@ public class Preprocessor {
         return storyCollection;
     }
 
+    public static HashSet<String> getPosLabels() {
+        return posLabels;
+    }
+
+    public static HashSet<String> getNegLabels() {
+        return negLabels;
+    }
+
     //fills the specified .txt with all of the emotional labels used on the stories. should only need to be ran once
     public static void getLabelList(String writePath) {
         HashSet<String> emotions = new HashSet<String>();
