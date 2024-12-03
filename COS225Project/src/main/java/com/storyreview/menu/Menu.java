@@ -23,17 +23,28 @@ public class Menu {
             boolean exit = false;
 
             while (!exit) {
-                // Display menu options for user
+                // Display menu options
                 System.out.println("Story Review Menu:");
                 System.out.println("1. Classify a user story");
                 System.out.println("2. Display TFIDF Information");
                 System.out.println("3. Exit");
                 System.out.print("Enter your choice (1-3): ");
 
+                int choice;
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                } else {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scanner.nextLine(); // Clear invalid input
+                    continue;
+                }
+
+            }
+        }
     }
 }
-    }
-}
+
         
         
         //run a while loop until the user chooses to exit
