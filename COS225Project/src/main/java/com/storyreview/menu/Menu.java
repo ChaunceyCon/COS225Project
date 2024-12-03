@@ -22,10 +22,18 @@ public class Menu {
         try (Scanner scanner = new Scanner(System.in)) { 
             boolean exit = false;
 
-        }
+            while (!exit) {
+                
+                System.out.println("Story Review Menu:");
+                System.out.println("1. Classify a user story");
+                System.out.println("2. Display TFIDF Information");
+                System.out.println("3. Exit");
+                System.out.print("Enter your choice (1-3): ");
+
     }
 }
-
+    }
+}
         
         
         //run a while loop until the user chooses to exit
