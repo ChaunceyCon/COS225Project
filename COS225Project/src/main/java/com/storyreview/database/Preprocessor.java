@@ -83,7 +83,7 @@ public class Preprocessor {
         //posLabels
         try(Scanner lineScanner = new Scanner(new File("src/resources/posLabels.txt"))) {
             while(lineScanner.hasNextLine()) {
-                posLabels.add(lineScanner.next());
+                posLabels.add(lineScanner.nextLine());
             }
         }
         catch(FileNotFoundException e) {
@@ -93,7 +93,7 @@ public class Preprocessor {
         //negLabels
         try(Scanner lineScanner = new Scanner(new File("src/resources/negLabels.txt"))) {
             while(lineScanner.hasNextLine()) {
-                negLabels.add(lineScanner.next());
+                negLabels.add(lineScanner.nextLine());
             }
         }
         catch(FileNotFoundException e) {
