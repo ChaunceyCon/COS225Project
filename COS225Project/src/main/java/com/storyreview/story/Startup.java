@@ -28,12 +28,15 @@ public class Startup {
         Preprocessor.processFile(shortPath,finPath,storyProcessor,sorter);
         HashMap<String,Story> storyCollection = Preprocessor.getStoryCollection();
 
+        //testing MLP stuff
         //String uStory = "For Christmas, George wanted a new toy. To his dismay, it was just a pair of socks. George was very angry. What a terrible present! This was the worst Christmas ever.";
         String uStory = "Tony was starting school tomorrow. He was very excited. He made a lot of new friends. All of his teachers were nice. He learned so much, and couldn't wait to go back again.";
         System.out.println("\n\nYour story is: \n"+uStory);
         System.out.println("Overall, this seems like a "+sorter.classifyUserStory(uStory, storyProcessor)+" story.");
         
-        /*try {
+        //adds all the Storys in storyCollection to the specified MongoDB database
+        //you should probably usually comment this part out when just testing stuff
+        try {
             // Get connection string from file and create DB Handler
             Scanner csScanner = new Scanner(new File("src/resources/conString.txt"));
             String conString = csScanner.nextLine();
@@ -55,6 +58,6 @@ public class Startup {
         {
             e.printStackTrace();
             System.out.println("Error finding the connection string file!");
-        }*/
+        }
     }
 }
