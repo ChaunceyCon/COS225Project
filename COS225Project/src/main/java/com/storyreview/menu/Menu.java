@@ -1,28 +1,30 @@
 package com.storyreview.menu;
 
-import com.storyreview.database.Database;
 import com.storyreview.mlp.TFIDF;
 import com.storyreview.mlp.Classifier;
-import com.storyreview.mlp.Processor;
 import com.storyreview.story.Story;
-import com.storyreview.story.StoryReview;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import org.bson.BsonValue;
-import com.mongodb.client.result.InsertOneResult;
 
 public class Menu {
 
+    private TFIDF tfidf;
+    private Classifier classifier;
 
-   
+    public Menu(TFIDF tfidf, Classifier classifier) {
+        this.tfidf = tfidf;
+        this.classifier = classifier;
     }
 
+    public void runMenu() {
+        try (Scanner scanner = new Scanner(System.in)) { 
+            boolean exit = false;
 
+        }
+    }
+}
 
         
         
