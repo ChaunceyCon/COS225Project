@@ -71,6 +71,17 @@ public class Menu {
         System.out.println("The sentiment of the story is: " + sentiment);
     }
 
+    private void displayTFIDFInfo() {
+        if (tfidf == null) {
+            System.out.println("TFIDF is not properly initialized.");
+            return;
+        }
+
+        System.out.println("TFIDF information:");
+        tfidf.displayInfo();
+    }
+
+}
 
         
         
