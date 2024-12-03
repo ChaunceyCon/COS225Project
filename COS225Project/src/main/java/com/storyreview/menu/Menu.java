@@ -40,10 +40,25 @@ public class Menu {
                     continue;
                 }
 
+                switch (choice) {
+                    case 1:
+                        classifyUserStory(scanner);
+                        break;
+                    case 2:
+                        displayTFIDFInfo();
+                        break;
+                    case 3:
+                        System.out.println("Exiting the story review system...");
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select an option between 1 and 3.");
+                }
             }
         }
     }
-}
+
+  
 
         
         
