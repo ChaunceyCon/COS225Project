@@ -59,7 +59,16 @@ public class TFIDF {
     //gets the TFIDF value of a specified word and document
     public double getTFIDF(String word,Story s) {
         int TF = TFHash.get(s.getKey()).get(word);
-        double IDF = IDFHash.get(word);
+        /*sometimes user stories will contain words not in the dataset,
+        meaning they have no value in IDFHash and we can't say anything about what they mean.
+        in this case, we'll just return 0 for the IDF value so nothing gets added to either score in classifyUserStory()*/
+        double IDF;
+        if(IDFHash.containsKey(word)) {
+            IDF=IDFHash.get(word);
+        }
+        else {
+            IDF=0;
+        }
         return TF*IDF;
     }
 
