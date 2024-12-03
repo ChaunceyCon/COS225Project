@@ -76,22 +76,12 @@ public class Classifier {
         double ratio;
         //fill posWordRatios
         for(String word : conWordCounts.get("positive").keySet()) {
-            if(conWordCounts.get("positive").containsKey(word)) {
-                ratio=Math.log((conWordCounts.get("positive").get(word)+1)/conTotalWords.get("positive"));
-            }
-            else {
-                ratio=Math.log(1/conTotalWords.get("positive"));
-            }
+            ratio=Math.log((conWordCounts.get("positive").get(word)+1)/conTotalWords.get("positive"));
             conWordRatios.get("positive").put(word,ratio);
         }
         //fill negWordRatios
         for(String word : conWordCounts.get("negative").keySet()) {
-            if(conWordCounts.get("negative").containsKey(word)) {
-                ratio=Math.log((conWordCounts.get("negative").get(word)+1)/conTotalWords.get("negative"));
-            }
-            else {
-                ratio=Math.log(1/conTotalWords.get("negative"));
-            }
+            ratio=Math.log((conWordCounts.get("negative").get(word)+1)/conTotalWords.get("negative"));
             conWordRatios.get("negative").put(word,ratio);
         }
     }
@@ -106,11 +96,29 @@ public class Classifier {
         String word;
         double posChance=Math.log(conProb.get("positive"));
         double negChance=Math.log(conProb.get("negative"));
+        //set ratio to the appropriate conWordRatio value if it exists or 1/conTotalWords.get(context) otherwise
+        double ratio;
         while(wordScanner.hasNext()) {
             word = wordScanner.next();
-            //need to add code to only run the below if a conWordRatios value exists for word
-            posChance+=conWordRatios.get("positive").get(word)*TFIDFProcessor.getTFIDF(word,userStory);
-            negChance+=conWordRatios.get("negative").get(word)*TFIDFProcessor.getTFIDF(word,userStory);
+            //sets ratio to the approprite value from conWordRatios if it exists
+            if(conWordRatios.get("positive").containsKey(word)) {
+                ratio=conWordRatios.get("positive").get(word);
+            }
+            //if it doesn't sets ratio to the value for words with 0 appearances in the context
+            else {
+                ratio=Math.log(1/conTotalWords.get("positive"));
+            }
+            //adds the final TFIDF*P(word|context) value for this word to the total
+            posChance+=ratio*TFIDFProcessor.getTFIDF(word,userStory);
+
+            //and then do it all again for negative
+            if(conWordRatios.get("negative").containsKey(word)) {
+                ratio=conWordRatios.get("negative").get(word);
+            }
+            else {
+                ratio=Math.log(1/conTotalWords.get("negative"));
+            }
+            negChance+=ratio*TFIDFProcessor.getTFIDF(word,userStory);
         }
         //removes userStory's HashMap from TFHash so this method can be used again
         TFIDFProcessor.trimTFHash(userStory.getKey());
