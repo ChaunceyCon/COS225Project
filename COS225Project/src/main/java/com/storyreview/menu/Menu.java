@@ -23,7 +23,7 @@ public class Menu {
             boolean exit = false;
 
             while (!exit) {
-                
+                // Display menu options for user
                 System.out.println("Story Review Menu:");
                 System.out.println("1. Classify a user story");
                 System.out.println("2. Display TFIDF Information");
