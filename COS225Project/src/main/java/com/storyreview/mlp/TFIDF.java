@@ -2,6 +2,8 @@ package com.storyreview.mlp;
 
 import java.util.*;
 
+import com.storyreview.story.*;
+
 public class TFIDF {
 
     //instance vars
@@ -12,25 +14,28 @@ public class TFIDF {
     private HashMap<String,Integer> wordFreq = new HashMap<String,Integer>();
 
     //gets all the necessary TFIDF information from a single story, to be run during processing
-    public void processStory(String story,String title,int storyNum) {
-        Scanner wordScanner = new Scanner(story);
+    public void processStory(Story s,boolean isDataStory) {
+        Scanner wordScanner = new Scanner(s.getFinStory());
         String word;
         HashMap<String,Integer> storyTF = new HashMap<String,Integer>();
         //look at each word in the story to set the appropriate TFIDF values
         while(wordScanner.hasNext()) {
             word=wordScanner.next();
-            //add 1 to word's wordFreq if this is the first time seeing word in this story
-            if(!storyTF.containsKey(word)) {
-                wordFreq.merge(word,1,(c,n) -> c+1);
+            //only update wordFreq and vocab if the Story is from the dataset, not the user
+            if(isDataStory) {
+                //add 1 to word's wordFreq if this is the first time seeing word in this story
+                if(!storyTF.containsKey(word)) {
+                    wordFreq.merge(word,1,(c,n) -> c+1);
+                }
+                //add word to vocab
+                vocab.add(word);
             }
             //add 1 to the current word's TF or set it to 1 if it doesn't exist yet
             storyTF.merge(word,1,(c,n) -> c+1);
-            //add word to vocab
-            vocab.add(word);
         }
         wordScanner.close();
         //add storyTF to the main TFHash w an id based off its title and number
-        TFHash.put(""+storyNum+"-"+title,storyTF);
+        TFHash.put(s.getKey(),storyTF);
     }
 
     //calculates IDFHash based on the final values for Preprocessor.storyCount and this.wordFreq
@@ -51,5 +56,42 @@ public class TFIDF {
 
     }
 
+    //gets the TFIDF value of a specified word and document
+    public double getTFIDF(String word,Story s) {
+        int TF = TFHash.get(s.getKey()).get(word);
+        /*sometimes user stories will contain words not in the dataset,
+        meaning they have no value in IDFHash and we can't say anything about what they mean.
+        in this case, we'll just return 0 for the IDF value so nothing gets added to either score in classifyUserStory()*/
+        double IDF;
+        if(IDFHash.containsKey(word)) {
+            IDF=IDFHash.get(word);
+        }
+        else {
+            IDF=0;
+        }
+        return TF*IDF;
+    }
+
+    //method used to remove userStory from TFHash so classifyUserStory() can be run again
+    public void trimTFHash(String key) {
+        TFHash.remove(key);
+    }
+
+    //get methods
+    public HashMap<String,HashMap<String,Integer>> getTFHash() {
+        return TFHash;
+    }
+
+    public HashMap<String,Double> getIDFHash() {
+        return IDFHash;
+    }
+
+    public HashSet<String> getVocab() {
+        return vocab;
+    }
+
+    public HashMap<String,Integer> getWordFreq() {
+        return wordFreq;
+    }
 
 }
