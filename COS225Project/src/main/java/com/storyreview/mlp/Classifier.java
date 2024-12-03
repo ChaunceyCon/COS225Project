@@ -67,21 +67,24 @@ public class Classifier {
     public void finishProcessing() {
         //total number of documents 
         int classifiedDocCount = conCollection.get("positive").size()+conCollection.get("negative").size();
+        System.out.println("The total # of classified docs is: "+classifiedDocCount);
         //set conProb's two values
-        double posProb = (conCollection.get("positive").size())/classifiedDocCount;
-        double negProb = (conCollection.get("negative").size())/classifiedDocCount;
+        double posProb = ((double)conCollection.get("positive").size())/classifiedDocCount;
+        System.out.println("posProb is: "+posProb);
+        double negProb = ((double)conCollection.get("negative").size())/classifiedDocCount;
+        System.out.println("negProb is: "+negProb);
         conProb.put("positive",posProb);
         conProb.put("negative",negProb);
 
         double ratio;
         //fill posWordRatios
         for(String word : conWordCounts.get("positive").keySet()) {
-            ratio=Math.log((conWordCounts.get("positive").get(word)+1)/conTotalWords.get("positive"));
+            ratio=Math.log(((double)(conWordCounts.get("positive").get(word)+1))/conTotalWords.get("positive"));
             conWordRatios.get("positive").put(word,ratio);
         }
         //fill negWordRatios
         for(String word : conWordCounts.get("negative").keySet()) {
-            ratio=Math.log((conWordCounts.get("negative").get(word)+1)/conTotalWords.get("negative"));
+            ratio=Math.log(((double)(conWordCounts.get("negative").get(word)+1))/conTotalWords.get("negative"));
             conWordRatios.get("negative").put(word,ratio);
         }
     }
@@ -106,7 +109,7 @@ public class Classifier {
             }
             //if it doesn't sets ratio to the value for words with 0 appearances in the context
             else {
-                ratio=Math.log(1/conTotalWords.get("positive"));
+                ratio=Math.log(1.0/conTotalWords.get("positive"));
             }
             //adds the final TFIDF*P(word|context) value for this word to the total
             posChance+=ratio*TFIDFProcessor.getTFIDF(word,userStory);
@@ -116,12 +119,16 @@ public class Classifier {
                 ratio=conWordRatios.get("negative").get(word);
             }
             else {
-                ratio=Math.log(1/conTotalWords.get("negative"));
+                ratio=Math.log(1.0/conTotalWords.get("negative"));
             }
             negChance+=ratio*TFIDFProcessor.getTFIDF(word,userStory);
+            System.out.println("Positive chance: "+posChance);
+            System.out.println("Negative chance: "+negChance+"\n");
         }
         //removes userStory's HashMap from TFHash so this method can be used again
         TFIDFProcessor.trimTFHash(userStory.getKey());
+        System.out.println("Positive chance: "+posChance);
+        System.out.println("Negative chance: "+negChance);
         if(negChance>posChance) {
             return "negative";
         }
