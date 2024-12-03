@@ -19,7 +19,7 @@ public class Menu {
     }
 
     public void runMenu() {
-        try (Scanner scanner = new Scanner(System.in)) { 
+        try (Scanner scanner = new Scanner(System.in)) { // Ensure Scanner is closed automatically
             boolean exit = false;
 
             while (!exit) {
@@ -58,7 +58,19 @@ public class Menu {
         }
     }
 
-  
+    private void classifyUserStory(Scanner scanner) {
+        System.out.println("Enter the text of the story:");
+        String userStory = scanner.nextLine();
+
+        if (tfidf == null || classifier == null) {
+            System.out.println("TFIDF or Classifier is not properly initialized.");
+            return;
+        }
+
+        String sentiment = classifier.classifyUserStory(userStory, tfidf);
+        System.out.println("The sentiment of the story is: " + sentiment);
+    }
+
 
         
         
