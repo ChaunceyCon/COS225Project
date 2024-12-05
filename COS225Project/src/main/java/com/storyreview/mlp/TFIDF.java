@@ -94,4 +94,32 @@ public class TFIDF {
         return wordFreq;
     }
 
+  // New displayInfo() method to print out key information about the TFIDF object
+  public void displayInfo() {
+    System.out.println("TFIDF Information:");
+
+    // Display TFHash
+    System.out.println("TF Hash:");
+    for (Map.Entry<String, HashMap<String, Integer>> entry : TFHash.entrySet()) {
+        System.out.println("Story ID: " + entry.getKey() + " -> " + entry.getValue());
+    }
+
+    // Display IDFHash
+    System.out.println("IDF Hash:");
+    for (Map.Entry<String, Double> entry : IDFHash.entrySet()) {
+        System.out.println(entry.getKey() + ": " + entry.getValue());
+    }
+
+    // Display vocab
+    System.out.println("Vocabulary:");
+    for (String word : vocab) {
+        System.out.println(word);
+    }
+
+    // Display word frequency
+    System.out.println("Word Frequencies:");
+    for (Map.Entry<String, Integer> entry : wordFreq.entrySet()) {
+        System.out.println(entry.getKey() + ": " + entry.getValue());
+    }
+}
 }
