@@ -2,10 +2,6 @@ package com.storyreview.menu;
 
 import com.storyreview.mlp.TFIDF;
 import com.storyreview.mlp.Classifier;
-import com.storyreview.story.Story;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Menu {
@@ -35,7 +31,7 @@ public class Menu {
                     choice = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
                 } else {
-                    System.out.println("Invalid input. Please enter a number.");
+                    System.out.println("Invalid input. Please enter a number."); 
                     scanner.nextLine(); // Clear invalid input
                     continue;
                 }
@@ -80,8 +76,8 @@ public class Menu {
         System.out.println("TFIDF information:");
         tfidf.displayInfo();
     }
-
 }
+
 
         
         
