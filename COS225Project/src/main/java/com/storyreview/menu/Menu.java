@@ -76,6 +76,16 @@ public class Menu {
         System.out.println("TFIDF information:");
         tfidf.displayInfo();
     }
+// Chauncey test code
+    public static void main(String[] args) {
+        // Initialize your TFIDF and Classifier objects here
+        TFIDF tfidf = new TFIDF();  // Replace with actual initialization
+        Classifier classifier = new Classifier();  // Replace with actual initialization (Hopefull, thanks Dr. O'Connell)
+
+        // Create an instance of Menu and run the menu
+        Menu menu = new Menu(tfidf, classifier);
+        menu.runMenu();  // This will invoke the existing menu logic
+    }
 }
 
 
