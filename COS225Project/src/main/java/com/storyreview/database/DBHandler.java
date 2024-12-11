@@ -10,7 +10,9 @@ import org.bson.Document;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
 public class DBHandler {
 
@@ -36,12 +38,32 @@ public class DBHandler {
             if(!(i==emotions.size()-1)) {
                 labels+="/";
             }
+            
         }
 
         //add to Mongo
         Document targetStory = new Document();
         targetStory.append("title", title).append("story", story).append("labels", labels);
         storiesCollection.insertOne(targetStory);
+    }
+    //add user story to mongoDB
+    public void addStory(String userStory, String sentiment) {
+        Document story = new Document("story", userStory)
+                .append("sentiment", sentiment);
+        storiesCollection.insertOne(story);
+        System.out.println("Story added to the database.");
+    }
+    // Method to get stories using an emotional label
+    public List<String> getStoriesBySentiment(String sentiment) {
+        List<String> stories = new ArrayList<>();
+        MongoCursor<Document> cursor = storiesCollection.find(Filters.eq("sentiment", sentiment)).iterator();
+        
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            stories.add(doc.getString("story"));
+        }
+        
+        return stories;
     }
 
     public void close() {
