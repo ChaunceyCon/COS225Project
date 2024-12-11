@@ -20,7 +20,7 @@ public class Menu {
 
             while (!exit) {
                 // Display menu options
-                System.out.println("Story Review Menu:");
+                System.out.println("\nStory Review Menu:");
                 System.out.println("1. Classify a user story");
                 System.out.println("2. Display TFIDF Information");
                 System.out.println("3. Exit");
@@ -36,7 +36,7 @@ public class Menu {
                     continue;
                 }
 
-
+                System.out.println();
                 switch (choice) {
                     case 1:
                         classifyUserStory(scanner);
