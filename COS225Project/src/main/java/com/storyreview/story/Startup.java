@@ -20,6 +20,7 @@ public class Startup {
         //create TFIDF and Classifier objects to effeciently get the necessary MLP data during processing
         TFIDF storyProcessor = new TFIDF();
         Classifier sorter = new Classifier();
+        
         //fill final.txt by processing raw.txt with Preprocesser
         Preprocessor.keepLongest(rawPath,shortPath);
         Preprocessor.processFile(shortPath,finPath,storyProcessor,sorter);
@@ -33,11 +34,15 @@ public class Startup {
         
         //adds all the Storys in storyCollection to the specified MongoDB database
         //you should probably usually comment this part out when just testing stuff
+       
+        DBHandler dbHandler = null;
+
+
         try {
             // Get connection string from file and create DB Handler
             Scanner csScanner = new Scanner(new File("src/resources/conString.txt"));
             String conString = csScanner.nextLine();
-            DBHandler dbHandler = new DBHandler(conString,"stories");
+            dbHandler = new DBHandler(conString,"stories");
             csScanner.close();
 
             // Upload data from storyCollection
@@ -59,9 +64,12 @@ public class Startup {
             e.printStackTrace();
             System.out.println("Error finding the connection string file!");
         }
-
+        if (dbHandler == null) {
+            System.out.println("DBHandler could not be initialized. Exiting Program.");
+            return; //exits the program if DBHandler is null
+        }
         //create the Menu object and run runMenu()
-        Menu m = new Menu(storyProcessor,sorter);
+        Menu m = new Menu(storyProcessor,sorter,dbHandler);
         m.runMenu();
 
         //reset everything to defaults after last run
