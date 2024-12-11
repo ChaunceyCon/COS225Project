@@ -16,9 +16,6 @@ public class Startup {
         String rawPath = "src/resources/raw.txt";
         String shortPath = "src/resources/short.txt";
         String finPath = "src/resources/final.txt";
-        
-        //reset everything to defaults after last run. will probably move this to the end before the actual presentation
-        Shutdown.reset(shortPath,finPath);
 
         //create TFIDF and Classifier objects to effeciently get the necessary MLP data during processing
         TFIDF storyProcessor = new TFIDF();
@@ -56,8 +53,6 @@ public class Startup {
             }
             System.out.println("Added "+storiesAdded+" stories to MongoDB");
             
-            // Close the connection
-            dbHandler.close();
         }
         catch(FileNotFoundException e)
         {
@@ -68,6 +63,9 @@ public class Startup {
         //create the Menu object and run runMenu()
         Menu m = new Menu(storyProcessor,sorter);
         m.runMenu();
+
+        //reset everything to defaults after last run
+        Shutdown.reset(shortPath,finPath);
         
     }
 }
