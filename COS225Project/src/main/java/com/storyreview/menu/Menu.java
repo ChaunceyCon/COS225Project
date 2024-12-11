@@ -13,10 +13,10 @@ public class Menu {
     private Classifier classifier;
     private DBHandler DBHandler;
 
-    public Menu(TFIDF tfidf, Classifier classifier) {
+    public Menu(TFIDF tfidf, Classifier classifier,DBHandler dbHandler) {
         this.tfidf = tfidf;
         this.classifier = classifier;
-        this.DBHandler = DBHandler;
+        this.DBHandler = dbHandler;
     }
 
     public void runMenu() {
