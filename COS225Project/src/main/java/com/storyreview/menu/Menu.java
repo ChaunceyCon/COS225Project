@@ -31,7 +31,7 @@ public class Menu {
                 System.out.println("3. Add a story to the database");
                 System.out.println("4. Search Stories by emotional Label");
                 System.out.println("5. Exit");
-                System.out.print("Enter your choice (1-3): ");
+                System.out.print("Enter your choice (1-5): ");
 
                 int choice;
                 if (scanner.hasNextInt()) {
