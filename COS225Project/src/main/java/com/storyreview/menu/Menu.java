@@ -36,6 +36,7 @@ public class Menu {
                     continue;
                 }
 
+
                 switch (choice) {
                     case 1:
                         classifyUserStory(scanner);
@@ -76,24 +77,5 @@ public class Menu {
         System.out.println("TFIDF information:");
         tfidf.displayInfo();
     }
-// Chauncey test code
-    public static void main(String[] args) {
-        // Initialize your TFIDF and Classifier objects here
-        TFIDF tfidf = new TFIDF();  // Replace with actual initialization
-        Classifier classifier = new Classifier();  // Replace with actual initialization (Hopefull, thanks Dr. O'Connell)
 
-        // Create an instance of Menu and run the menu
-        Menu menu = new Menu(tfidf, classifier);
-        menu.runMenu();  // This will invoke the existing menu logic
-    }
 }
-
-
-        
-        
-        //run a while loop until the user chooses to exit
-        //each iteration, display the menu options and ask the user for a number representing their choice
-        //use a switch statement to use the appropriate feature based on what the user selects
-        //for the main mlp feature you just need to get another user input for the user's story and then run classifier.classifyUserStory(String userStoryThatYouJustGot,TFIDFProcessor); and it should work
-
-
