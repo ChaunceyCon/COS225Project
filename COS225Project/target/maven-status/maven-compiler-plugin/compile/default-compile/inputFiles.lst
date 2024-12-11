@@ -1,2 +1,13 @@
+<<<<<<< Updated upstream
 /mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/java/com/storyreview/Preprocessor.java
 /mnt/c/Users/Chauncey/OneDrive - University of Maine System/Desktop/Java/COS225PROJECT/COS225PROJECT/COS225Project/src/main/java/com/storyreview/DBHandler.java
+=======
+/Users/katemartell/Desktop/GitHubCollabDemo/COS225Project/src/main/java/com/storyreview/database/DBHandler.java
+/Users/katemartell/Desktop/GitHubCollabDemo/COS225Project/src/main/java/com/storyreview/database/Preprocessor.java
+/Users/katemartell/Desktop/GitHubCollabDemo/COS225Project/src/main/java/com/storyreview/menu/Menu.java
+/Users/katemartell/Desktop/GitHubCollabDemo/COS225Project/src/main/java/com/storyreview/mlp/Classifier.java
+/Users/katemartell/Desktop/GitHubCollabDemo/COS225Project/src/main/java/com/storyreview/mlp/TFIDF.java
+/Users/katemartell/Desktop/GitHubCollabDemo/COS225Project/src/main/java/com/storyreview/story/Shutdown.java
+/Users/katemartell/Desktop/GitHubCollabDemo/COS225Project/src/main/java/com/storyreview/story/Startup.java
+/Users/katemartell/Desktop/GitHubCollabDemo/COS225Project/src/main/java/com/storyreview/story/Story.java
+>>>>>>> Stashed changes
