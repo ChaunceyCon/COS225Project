@@ -49,6 +49,10 @@ public class Startup {
                 dbHandler.addStory(s);
                 System.out.println(s.getKey()+" successfully added");
                 storiesAdded++;
+                //code for the live demo to stop adding to mongo once we hit 2000
+                if(storiesAdded==2000) {
+                    break;
+                }
             }
             System.out.println("Added "+storiesAdded+" stories to MongoDB");
             
