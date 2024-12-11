@@ -47,6 +47,7 @@ public class Startup {
             int storiesAdded=0;
             for(Story s : storyCollection.values()) {
                 dbHandler.addStory(s);
+                System.out.println(s.getKey()+" successfully added");
                 storiesAdded++;
             }
             System.out.println("Added "+storiesAdded+" stories to MongoDB");
