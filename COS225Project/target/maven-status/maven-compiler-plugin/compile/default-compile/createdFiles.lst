@@ -1,1 +1,8 @@
-com/storyreview/DBHandler.class
+com/storyreview/story/Shutdown.class
+com/storyreview/mlp/TFIDF.class
+com/storyreview/story/Startup.class
+com/storyreview/menu/Menu.class
+com/storyreview/database/Preprocessor.class
+com/storyreview/database/DBHandler.class
+com/storyreview/story/Story.class
+com/storyreview/mlp/Classifier.class

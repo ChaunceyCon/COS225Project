@@ -45,6 +45,7 @@ public class Story {
         else if(negCount>posCount) {
             sentiment="negative";
         }
+        lScanner.close();
     }
 
     //get methods
