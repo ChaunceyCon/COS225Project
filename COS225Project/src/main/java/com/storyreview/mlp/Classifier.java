@@ -123,6 +123,8 @@ public class Classifier {
             }
             negChance+=ratio*TFIDFProcessor.getTFIDF(word,userStory);
         }
+        wordScanner.close();
+        
         //removes userStory's HashMap from TFHash so this method can be used again
         TFIDFProcessor.trimTFHash(userStory.getKey());
         if(negChance>posChance) {
