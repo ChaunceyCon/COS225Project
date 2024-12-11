@@ -122,13 +122,9 @@ public class Classifier {
                 ratio=Math.log(1.0/conTotalWords.get("negative"));
             }
             negChance+=ratio*TFIDFProcessor.getTFIDF(word,userStory);
-            System.out.println("Positive chance: "+posChance);
-            System.out.println("Negative chance: "+negChance+"\n");
         }
         //removes userStory's HashMap from TFHash so this method can be used again
         TFIDFProcessor.trimTFHash(userStory.getKey());
-        System.out.println("Positive chance: "+posChance);
-        System.out.println("Negative chance: "+negChance);
         if(negChance>posChance) {
             return "negative";
         }
