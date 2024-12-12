@@ -61,7 +61,7 @@ public class Menu {
                         exit = true;
                         break;
                     default:
-                        System.out.println("Invalid choice. Please select an option between 1 and 3.");
+                        System.out.println("Invalid choice. Please select an option between 1 and 5.");
                 }
             }
         }
