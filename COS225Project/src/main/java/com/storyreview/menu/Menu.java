@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_RED = "\u001B[31m"; 
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
@@ -108,7 +108,7 @@ public class Menu {
         DBHandler.addStory(userStory, sentiment);
     }
     private void searchStoriesByEmotion(Scanner scanner){
-        System.out.println("Enter the emotional label");
+        System.out.print("Enter the emotional label: " );
         String sentiment = scanner.nextLine().trim().toLowerCase();
        
         List<String> stories = DBHandler.getStoriesBySentiment(sentiment);
