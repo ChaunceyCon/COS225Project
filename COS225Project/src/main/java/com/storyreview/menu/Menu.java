@@ -45,7 +45,7 @@ public class Menu {
                     choice = scanner.nextInt();
                     scanner.nextLine(); // Consume newline
                 } else {
-                    System.out.println("Invalid input. Please enter a number."); 
+                    System.out.println(ANSI_RED+ "Invalid input. Please enter a number."+ ANSI_RESET); 
                     scanner.nextLine(); // Clear invalid input
                     continue;
                 }
