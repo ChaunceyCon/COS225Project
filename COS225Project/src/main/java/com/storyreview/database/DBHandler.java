@@ -56,7 +56,7 @@ public class DBHandler {
     public List<String> getStoriesBySentiment(String sentiment) {
         List<String> stories = new ArrayList<>();
 
-        String regex = "\\b" + sentiment + "\\b";
+        String regex = "\\b" + sentiment + "\\b"; // Filters to find the exact word, uses a word boundary. 
         MongoCursor<Document> cursor = storiesCollection.find(Filters.regex("story", regex, "i")).limit(1).iterator(); 
         
         while (cursor.hasNext()) {
