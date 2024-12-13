@@ -9,6 +9,13 @@ import java.util.Scanner;
 
 public class Menu {
 
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
     private TFIDF tfidf;
     private Classifier classifier;
     private DBHandler DBHandler;
@@ -25,13 +32,13 @@ public class Menu {
 
             while (!exit) {
                 // Display menu options
-                System.out.println("Story Review Menu:");
-                System.out.println("1. Classify a user story");
-                System.out.println("2. Display TFIDF Information");
-                System.out.println("3. Add a story to the database");
-                System.out.println("4. Search Stories by emotional Label");
-                System.out.println("5. Exit");
-                System.out.print("Enter your choice (1-5): ");
+                System.out.println(ANSI_BLUE + "Story Review Menu:" + ANSI_RESET);
+                System.out.println(ANSI_GREEN + "1. Classify a user story"+ ANSI_RESET);
+                System.out.println(ANSI_GREEN + "2. Display TFIDF Information"+ ANSI_RESET);
+                System.out.println(ANSI_GREEN + "3. Add a story to the database"+ ANSI_RESET);
+                System.out.println(ANSI_GREEN + "4. Search Stories by emotional Label"+ ANSI_RESET);
+                System.out.println(ANSI_GREEN + "5. Exit"+ ANSI_RESET);
+                System.out.print(ANSI_YELLOW+ "Enter your choice (1-5): "+ ANSI_RESET);
 
                 int choice;
                 if (scanner.hasNextInt()) {
@@ -61,7 +68,7 @@ public class Menu {
                         exit = true;
                         break;
                     default:
-                        System.out.println("Invalid choice. Please select an option between 1 and 5.");
+                        System.out.println("Invalid choice. Please select an option between 1 and 3.");
                 }
             }
         }
@@ -102,7 +109,7 @@ public class Menu {
     }
     private void searchStoriesByEmotion(Scanner scanner){
         System.out.println("Enter the emotional label");
-        String sentiment = scanner.nextLine();
+        String sentiment = scanner.nextLine().trim().toLowerCase();
        
         List<String> stories = DBHandler.getStoriesBySentiment(sentiment);
 
