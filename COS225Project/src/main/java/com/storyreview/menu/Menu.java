@@ -108,7 +108,7 @@ public class Menu {
         DBHandler.addStory(userStory, sentiment);
     }
     private void searchStoriesByEmotion(Scanner scanner){
-        System.out.print("Enter the emotional label: " );
+        System.out.print(ANSI_YELLOW + "Enter the emotional label: " + ANSI_RESET);
         String sentiment = scanner.nextLine().trim().toLowerCase();
        
         List<String> stories = DBHandler.getStoriesBySentiment(sentiment);
