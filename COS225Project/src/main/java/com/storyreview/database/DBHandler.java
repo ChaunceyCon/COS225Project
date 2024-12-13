@@ -55,7 +55,9 @@ public class DBHandler {
     // Method to get stories using an emotional label
     public List<String> getStoriesBySentiment(String sentiment) {
         List<String> stories = new ArrayList<>();
-        MongoCursor<Document> cursor = storiesCollection.find(Filters.eq("sentiment", sentiment)).iterator();
+
+        String regex = "\\b" + sentiment + "\\b";
+        MongoCursor<Document> cursor = storiesCollection.find(Filters.regex("story", regex, "i")).iterator();
         
         while (cursor.hasNext()) {
             Document doc = cursor.next();
