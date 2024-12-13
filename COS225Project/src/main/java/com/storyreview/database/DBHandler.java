@@ -57,7 +57,7 @@ public class DBHandler {
         List<String> stories = new ArrayList<>();
 
         String regex = "\\b" + sentiment + "\\b";
-        MongoCursor<Document> cursor = storiesCollection.find(Filters.regex("story", regex, "i")).iterator();
+        MongoCursor<Document> cursor = storiesCollection.find(Filters.regex("story", regex, "i")).limit(1).iterator(); 
         
         while (cursor.hasNext()) {
             Document doc = cursor.next();
