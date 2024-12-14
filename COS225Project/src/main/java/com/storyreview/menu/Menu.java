@@ -15,7 +15,7 @@ public class Menu {
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_RESET = "\u001B[0m";
-
+    // Variables for TFIDF, Classifier, and DBHandler
     private TFIDF tfidf;
     private Classifier classifier;
     private DBHandler DBHandler;
