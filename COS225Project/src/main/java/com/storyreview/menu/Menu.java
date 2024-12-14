@@ -6,7 +6,7 @@ import com.storyreview.mlp.Classifier;
 
 import java.util.List;
 import java.util.Scanner;
-
+//Defining colors for terminal
 public class Menu {
 
     public static final String ANSI_RED = "\u001B[31m"; 
