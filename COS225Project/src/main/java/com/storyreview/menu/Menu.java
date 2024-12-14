@@ -107,6 +107,7 @@ public class Menu {
         String sentiment = classifier.classifyUserStory(userStory, tfidf);
         DBHandler.addStory(userStory, sentiment);
     }
+    // Method to search stories in the database based on the emotional label
     private void searchStoriesByEmotion(Scanner scanner){
         System.out.print(ANSI_YELLOW + "Enter the emotional label: " + ANSI_RESET);
         String sentiment = scanner.nextLine().trim().toLowerCase();
