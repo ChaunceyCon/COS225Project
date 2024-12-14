@@ -96,6 +96,7 @@ public class Menu {
         System.out.println("TFIDF information:");
         tfidf.displayInfo();
     }
+    // Method to add a user's story to the database with its sentiment
     private void addStoryToDatabase(Scanner scanner){
         System.out.println("Enter the text of the story:");
         String userStory = scanner.nextLine();
