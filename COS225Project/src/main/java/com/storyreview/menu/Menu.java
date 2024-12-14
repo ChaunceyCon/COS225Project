@@ -86,7 +86,7 @@ public class Menu {
         String sentiment = classifier.classifyUserStory(userStory, tfidf);
         System.out.println("The sentiment of the story is: " + sentiment);
     }
-
+    // Method to display TFIDF information
     private void displayTFIDFInfo() {
         if (tfidf == null) {
             System.out.println("TFIDF is not properly initialized.");
