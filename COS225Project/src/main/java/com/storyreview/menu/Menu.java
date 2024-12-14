@@ -73,7 +73,7 @@ public class Menu {
             }
         }
     }
-
+    // Method to classify a user story based on sentiment
     private void classifyUserStory(Scanner scanner) {
         System.out.println("Enter the text of the story:");
         String userStory = scanner.nextLine();
