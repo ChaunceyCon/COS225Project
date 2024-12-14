@@ -9,7 +9,7 @@ public class Story {
     private String title,iniStory,finStory,sentiment;
     private int number;
     private ArrayList<String> emotions = new ArrayList<String>();
-
+    // Constructor to initialize a new Story object with the title, initial story, final story, labels, and number
     public Story(String t,String iS,String fS,String labels,int n) {
         title=t;
         iniStory=iS;
