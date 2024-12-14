@@ -19,13 +19,13 @@ public class Menu {
     private TFIDF tfidf;
     private Classifier classifier;
     private DBHandler DBHandler;
-// initializing TFIDF, Classifier, and DBHandler
+    // initializing TFIDF, Classifier, and DBHandler
     public Menu(TFIDF tfidf, Classifier classifier,DBHandler dbHandler) {
         this.tfidf = tfidf;
         this.classifier = classifier;
         this.DBHandler = dbHandler;
     }
-// Display the menu and handle user input
+    // Display the menu and handle user input
     public void runMenu() {
         try (Scanner scanner = new Scanner(System.in)) { // Ensure Scanner is closed automatically
             boolean exit = false;
@@ -49,7 +49,7 @@ public class Menu {
                     scanner.nextLine(); // Clear invalid input
                     continue;
                 }
-
+                // Handle the user's choice with a switch statement
                 switch (choice) {
                     case 1:
                         classifyUserStory(scanner);
