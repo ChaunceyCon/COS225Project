@@ -25,7 +25,7 @@ public class Menu {
         this.classifier = classifier;
         this.DBHandler = dbHandler;
     }
-
+// Display the menu and handle user input
     public void runMenu() {
         try (Scanner scanner = new Scanner(System.in)) { // Ensure Scanner is closed automatically
             boolean exit = false;
