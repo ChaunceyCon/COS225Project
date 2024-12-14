@@ -5,7 +5,7 @@ import java.util.*;
 import com.storyreview.database.Preprocessor;
 
 public class Story {
-    
+     // Instance variables for the story's title, initial and final story text, sentiment, number, and emotions
     private String title,iniStory,finStory,sentiment;
     private int number;
     private ArrayList<String> emotions = new ArrayList<String>();
