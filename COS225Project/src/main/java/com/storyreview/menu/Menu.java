@@ -19,7 +19,7 @@ public class Menu {
     private TFIDF tfidf;
     private Classifier classifier;
     private DBHandler DBHandler;
-
+// initializing TFIDF, Classifier, and DBHandler
     public Menu(TFIDF tfidf, Classifier classifier,DBHandler dbHandler) {
         this.tfidf = tfidf;
         this.classifier = classifier;
