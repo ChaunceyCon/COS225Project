@@ -77,7 +77,7 @@ public class Menu {
     private void classifyUserStory(Scanner scanner) {
         System.out.println("Enter the text of the story:");
         String userStory = scanner.nextLine();
-
+        // Determines the sentiment of the user's story
         if (tfidf == null || classifier == null) {
             System.out.println("TFIDF or Classifier is not properly initialized.");
             return;
